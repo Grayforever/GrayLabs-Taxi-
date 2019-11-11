@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/phone_val_root">
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/prim_toolbar1"
+        layout="@layout/primary_toolbar"
+    />
+
+    <com.goodiebag.pinview.Pinview
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:forceKeyboard="false"
+        app:cursorVisible="true"
+        app:hint="0"
+        app:inputType="number"
+        app:pinWidth="40dp"
+        app:pinHeight="40dp"
+        app:pinLength="6"
+        android:id="@+id/phone_pinView"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/enter_code_tv"
+        android:layout_below="@id/phone_pinView"
+        android:text="Text message sent to"
+        android:layout_centerHorizontal="true"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timer_tv"
+        android:layout_below="@id/enter_code_tv"
+        android:text="Resend in "
+        android:layout_centerHorizontal="true"
+    />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/prim_btn1"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/primary_btn_bg"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:enabled="false"
+        android:layout_marginBottom="8dp"
+        android:text="Next"
+        android:textAllCaps="false"
+        android:textSize="22sp"
+        android:textColor="@android:color/white"
+    />
+
+</RelativeLayout>

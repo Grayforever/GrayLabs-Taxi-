@@ -1,0 +1,142 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/get_started_root"
+    android:focusable="true"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/frame_layout"
+        android:background="@drawable/radial_frame_bg"
+        android:orientation="vertical"
+        android:elevation="4dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/brand_img"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_launcher_round"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+        />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/welcome_txt"
+            android:text="Welcome to Taxify"
+            android:layout_gravity="center_horizontal"
+            android:textSize="22sp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+        />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/slogan_txt"
+            android:text="The ride sharing service for the 21st century"
+            android:layout_gravity="center_horizontal"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/white"
+        />
+
+    </LinearLayout>
+
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/frame_layout"
+        android:id="@+id/sign_in_text"
+        android:text="Get started with your"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentStart="true"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp"
+    />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sign_in_text"
+        android:weightSum="4"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1.5"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:background="@drawable/border_bg"
+            android:layout_marginEnd="8dp"
+            android:clickable="true"
+            android:id="@+id/cc_layout">
+
+            <Refractored.Controls.CircleImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/country_flag_img"
+                android:scaleType="centerCrop"
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+            />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/cc_textview"
+                android:textSize="22sp"
+                android:layout_weight="2"
+                android:maxLength="4"
+                android:hint="+233"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+            />
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:id="@+id/user_phone_edittext"
+            android:layout_weight="2.5"
+            android:layout_alignParentEnd="true"
+            android:hint="Phone Number"
+            android:inputType="phone"
+            android:textSize="22sp"
+            android:paddingLeft="16dp"
+            android:background="@drawable/border_bg"
+            android:textColor="@android:color/black"
+            android:imeOptions="actionDone"
+        />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/primary_btn"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/primary_btn_bg"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:text="Sign in"
+        android:textAllCaps="false"
+        android:textSize="22sp"
+        android:textColor="@android:color/white"
+        android:enabled="false"
+    />
+
+</RelativeLayout>

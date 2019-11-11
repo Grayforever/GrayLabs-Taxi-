@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/profile_main_root">
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_main_toolbar"
+        layout="@layout/primary_toolbar"/>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_phone"
+        android:hint="Phone"
+        android:inputType="phone"
+        android:enabled="false"
+        android:layout_below="@id/profile_main_toolbar"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+    />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/content_root_rl"
+        android:layout_below="@id/profile_phone"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_firstname"
+            android:hint="Firstname"
+            android:inputType="textPersonName"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/profile_phone"
+            android:layout_weight="1"
+        />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_lastname"
+            android:hint="Lastname"
+            android:inputType="textPersonName"
+            android:layout_alignParentEnd="true"
+            android:layout_weight="1"
+        />
+
+
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_email"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:layout_below="@id/content_root_rl"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+    />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@id/profile_email"
+        android:id="@+id/separator"
+    />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/favs_recycler"
+        android:layout_below="@id/separator"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="16dp"
+        android:scrollbars="horizontal"
+    />
+                    
+</RelativeLayout>
+

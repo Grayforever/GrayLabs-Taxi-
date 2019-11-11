@@ -1,0 +1,145 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/trip_root"
+    android:background="@drawable/bg_bottomsheet_dg"
+    app:behavior_hideable="true"
+    android:elevation="16dp"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+    app:layout_insetEdge="bottom"
+    android:paddingBottom="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:id="@+id/tripview_rl">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:id="@+id/curr_loc_img"
+            android:src="@drawable/redball"
+            android:layout_alignParentStart="true"
+            android:layout_margin="2dp"
+            android:layout_centerVertical="true"
+        />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/from_tv1"
+            android:text="Kumasi"
+            android:layout_toEndOf="@+id/curr_loc_img"
+            android:layout_toStartOf="@+id/septor_view"
+            android:textAlignment="viewStart"
+            android:maxLines="2"
+            android:layout_centerVertical="true"
+        />
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="2dp"
+            android:background="@android:color/black"
+            android:layout_centerInParent="true"
+            android:id="@+id/septor_view"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+        />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/to_tv1"
+            android:text="Kasoa"
+            android:layout_toStartOf="@+id/dest_loc_img"
+            android:layout_toEndOf="@+id/septor_view"
+            android:textAlignment="viewEnd"
+            android:maxLines="2"
+            android:layout_centerVertical="true"
+        />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:id="@+id/dest_loc_img"
+            android:src="@drawable/greenball"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="2dp"
+            android:layout_centerVertical="true"
+        />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linear_trip1"
+        android:orientation="horizontal"
+        android:layout_margin="16dp"
+        android:layout_below="@+id/tripview_rl">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="@dimen/design_fab_size_normal"
+            android:layout_height="@dimen/design_fab_size_normal"
+            android:id="@+id/img_ride_type"
+            android:src="@drawable/taxi"
+            android:scaleType="centerCrop"
+            android:layout_margin="8dp"
+        />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/linear_trip"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16sp"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/trip_value_txt"
+                android:text="GH¢ 17"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+            />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/trip_time_txt"
+                android:text="15 min"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+            />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/primary_btn_bg"
+        android:text="Select ride"
+        android:textColor="@android:color/white"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/ride_select_btn"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_below="@+id/linear_trip1"
+    />
+</RelativeLayout>

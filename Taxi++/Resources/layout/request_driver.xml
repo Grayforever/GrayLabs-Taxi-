@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:paddingLeft="16dp"
+	android:paddingRight="16dp"
+	android:paddingBottom="10dp"
+	android:paddingTop="10dp"
+	android:background="@android:color/white"
+	android:minHeight="420dp"
+	android:minWidth="300dp">
+
+	<RelativeLayout
+		android:layout_height="0dp"
+		android:layout_weight="0.3"
+		android:layout_width="match_parent">
+
+		<ProgressBar
+			android:id="@+id/progressSpinner"
+			android:layout_width="60dp"
+			android:layout_height="60dp"
+			android:indeterminate="true"
+			android:indeterminateTintMode="src_atop"
+			android:indeterminateTint="@color/colorAccent"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="10dp"
+		/>
+
+		<TextView
+		    android:layout_height="wrap_content"
+		    android:layout_width="match_parent"
+		    android:gravity="center"
+			android:textSize ="22sp"
+			android:layout_marginTop="20dp"
+			android:layout_below="@+id/progressSpinner"
+			android:text="Finding a nearby driver"
+		/>
+
+		</RelativeLayout>
+
+	<LinearLayout
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="0.5"
+		>
+		<ImageView
+			android:layout_height="70dp"
+			android:layout_width="70dp"
+			android:src="@drawable/taxi"
+			android:layout_gravity="center_horizontal"
+			android:layout_margin="20dp"
+		/>
+
+		<TextView
+			android:layout_height = "wrap_content"
+			android:layout_width="match_parent"
+			android:text="Estimated Fare"
+			android:gravity="center"
+			/>
+
+		<TextView
+		android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:id="@+id/faresText"
+			android:gravity="center"
+			android:text="$2000"
+			android:textStyle="bold"
+			android:textSize="20sp"
+			android:layout_marginTop="5dp"
+			
+		/>
+	
+	</LinearLayout>
+
+	<RelativeLayout
+		android:layout_height="0dp"
+		android:layout_width="match_parent"
+		android:layout_weight="0.2">
+
+		<Button
+			android:id="@+id/cancelrequestButton"
+			android:layout_height="45dp"
+			android:layout_width="match_parent"
+			android:textAllCaps="false"
+			android:background="@drawable/primary_btn_bg"
+			android:text="Cancel"
+			android:textColor="@android:color/white"
+		/>
+		
+	</RelativeLayout>
+
+</LinearLayout>

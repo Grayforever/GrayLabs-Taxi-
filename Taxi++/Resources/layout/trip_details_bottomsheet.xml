@@ -38,20 +38,23 @@
             android:id="@+id/from_tv1"
             android:text="Kumasi"
             android:layout_toEndOf="@+id/curr_loc_img"
-            android:layout_toStartOf="@+id/septor_view"
+            android:layout_toStartOf="@+id/mProgress_trip"
             android:textAlignment="viewStart"
             android:maxLines="2"
             android:layout_centerVertical="true"
+            android:textColor="@android:color/black"
         />
 
-        <View
+        <ProgressBar
             android:layout_width="40dp"
-            android:layout_height="2dp"
-            android:background="@android:color/black"
+            android:layout_height="16dp"
+            android:id="@+id/mProgress_trip"
             android:layout_centerInParent="true"
-            android:id="@+id/septor_view"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="2dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="visible"
+            android:indeterminate="true"
+            style="@android:style/Widget.Material.ProgressBar.Horizontal"
         />
 
         <TextView
@@ -60,10 +63,11 @@
             android:id="@+id/to_tv1"
             android:text="Kasoa"
             android:layout_toStartOf="@+id/dest_loc_img"
-            android:layout_toEndOf="@+id/septor_view"
+            android:layout_toEndOf="@+id/mProgress_trip"
             android:textAlignment="viewEnd"
             android:maxLines="2"
             android:layout_centerVertical="true"
+            android:textColor="@android:color/black"
         />
 
         <ImageView
@@ -74,6 +78,15 @@
             android:layout_alignParentEnd="true"
             android:layout_margin="2dp"
             android:layout_centerVertical="true"
+        />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:id="@+id/septor_view"
+            android:layout_below="@id/dest_loc_img"
+            android:layout_marginTop="16dp"
         />
     </RelativeLayout>
 
@@ -133,7 +146,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/primary_btn_bg"
-        android:text="Select ride"
+        android:text="Request pickup"
         android:textColor="@android:color/white"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/ride_select_btn"

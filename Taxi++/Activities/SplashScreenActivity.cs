@@ -42,15 +42,13 @@ namespace Taxi__.Activities
                 string firstname = sessionManager.GetFirstname();
                 if (!string.IsNullOrEmpty(firstname))
                 {
-                    var startMainIntent = new Intent(this, typeof(MainActivity));
-                    startMainIntent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.ClearTask | ActivityFlags.NewTask);
-                    StartActivity(startMainIntent);
+                    StartActivity(typeof(MainActivity));
+                    Finish();
                 }
                 else
                 {
-                    var startStartIntent = new Intent(this, typeof(MainActivity));
-                    startStartIntent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.ClearTask | ActivityFlags.NewTask);
-                    StartActivity(startStartIntent);
+                    StartActivity(typeof(GetStartedActivity));
+                    Finish();
                 }
             }
             base.OnResume();

@@ -12,6 +12,7 @@ using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
+using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
@@ -19,8 +20,8 @@ using Google.Places;
 using System;
 using System.Collections.Generic;
 using Taxi__.Activities;
+using Taxi__.Adapters;
 using Taxi__.DataModels;
-using Taxi__.Fragments;
 using Taxi__.Helpers;
 using static Android.Content.IntentSender;
 
@@ -35,7 +36,7 @@ namespace Taxi__
         private DrawerLayout mDrawer;
         private ActionBarDrawerToggle mToggle;
         private NavigationView navView;
-        private TextView drawerTextUsername;
+        private TextView drawerTextUsername, name_tv;
         public BottomSheetBehavior behaviour;
         public BottomSheetBehavior behaviour_trip;
         private FloatingActionButton fabMyLoc;
@@ -73,10 +74,15 @@ namespace Taxi__
         //offline preferences
         readonly SessionManager sessionManager = SessionManager.GetInstance();
         internal static MainActivity Instance { get; set; }
-
         //shared preference
         ISharedPreferences preferences = Application.Context.GetSharedPreferences("userinfo", FileCreationMode.Private);
         ISharedPreferencesEditor editor;
+
+        //Recent Search
+        List<SearchHistoryModel> recent_searches;
+        HistoryAdapter historyAdapter;
+        RecyclerView.LayoutManager layoutManager;
+        RecyclerView historyRecycler;
 
         #endregion
 
@@ -88,6 +94,9 @@ namespace Taxi__
             Instance = this;
             InitWidgets();
             InitMaps();
+
+            CreateHistory();
+            GetHisstory();
 
             var api_key = GetString(Resource.String.map_key);
 
@@ -113,10 +122,7 @@ namespace Taxi__
             SupportActionBar.Title = "";
             mToggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, Resource.String.open, Resource.String.close);
             mDrawer.AddDrawerListener(mToggle);
-            mToolbar.SetNavigationIcon(Resource.Drawable.profile_img);
-
-            
-
+            mToolbar.SetNavigationIcon(Resource.Drawable.ic_nav_menu);
 
             //NavigationView
             navView = (NavigationView)FindViewById(Resource.Id.navView);
@@ -162,10 +168,27 @@ namespace Taxi__
             };
 
             //bottomsheet widgets
-            var name_tv = (TextView)FindViewById(Resource.Id.greetings_tv);
+            name_tv = (TextView)FindViewById(Resource.Id.greetings_tv);
             dest_rl = (RelativeLayout)FindViewById(Resource.Id.layoutDestination);
             dest_rl.Click += Dest_rl_Click;
-            name_tv.Text = $"Hi {firstname},";
+
+            name_tv.Text = GetGreetings(firstname);
+
+            historyRecycler = (RecyclerView)FindViewById(Resource.Id.mRecycler);
+
+        }
+
+        void GetHisstory()
+        {
+            layoutManager = new Android.Support.V7.Widget.LinearLayoutManager(historyRecycler.Context);
+            historyRecycler.SetLayoutManager(layoutManager);
+            historyRecycler.SetAdapter(historyAdapter);
+        }
+
+        void CreateHistory()
+        {
+            recent_searches = new List<SearchHistoryModel>();
+            recent_searches.Add(new SearchHistoryModel { PlaceName = sessionManager.GetDestination() });
         }
 
         private void HeaderView_Click(object sender, EventArgs e)
@@ -177,6 +200,43 @@ namespace Taxi__
                 OverridePendingTransition(Resource.Animation.slide_up_anim, Resource.Animation.slide_up_out);
             }
             return;
+        }
+
+        private string GetGreetings(string name)
+        {
+            string greeting = null;
+            try
+            {
+                Java.Util.Date date = new Java.Util.Date();
+                Java.Util.Calendar calendar = Java.Util.Calendar.Instance;
+                calendar.Time = date;
+
+                int hour = calendar.Get(Java.Util.CalendarField.HourOfDay);
+
+                if (hour >= 12 && hour < 17)
+                {
+                    greeting = $"Good Afternoon, {name}";
+                }
+                else if (hour >= 17 && hour < 21)
+                {
+                    greeting = $"Good Evening, {name}";
+                }
+                else if (hour >= 21 && hour < 24)
+                {
+                    greeting = $"Good Night, {name}";
+                }
+                else
+                {
+                    greeting = $"Good Morning, {name}";
+                }
+                
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error", ex.Message);
+            }
+
+            return greeting;
         }
 
         private void StartAutoComplete()
@@ -321,11 +381,13 @@ namespace Taxi__
         public void OnMapReady(GoogleMap googleMap)
         {
             mainMap = googleMap;
+            InfoWindowHelper infoWindowHelper = new InfoWindowHelper(this);
+            mainMap.SetInfoWindowAdapter(infoWindowHelper);
 
             mapHelper = new MapFunctionHelper(base.Resources.GetString(Resource.String.map_key), mainMap);
-            
-            CreateLocationRequestAsync();
             UpdateLocationUi();
+            CreateLocationRequestAsync();
+            
         }
 
         private void UpdateLocationUi()
@@ -341,6 +403,7 @@ namespace Taxi__
                 {
                     mainMap.MyLocationEnabled = true;
                     mainMap.UiSettings.MyLocationButtonEnabled = false;
+                    mainMap.UiSettings.CompassEnabled = false;
                 }
                 else
                 {
@@ -364,7 +427,6 @@ namespace Taxi__
                 {
                     return;
                 }
-
                 mLastLocation = await locationClient.GetLastLocationAsync();
                 if (mLastLocation != null)
                 {
@@ -384,11 +446,14 @@ namespace Taxi__
 
         private void ResetTrip()
         {
+            var firstname = sessionManager.GetFirstname();
+
             if (IsTripDrawn == true)
             {
                 dest_rl.Enabled = true;
                 progress.Visibility = ViewStates.Gone;
-                destinationText.Text = "Where to?";
+                name_tv.Text = $"Welcome back, {firstname}";
+                destinationText.Text = "Search destination";
                 IsTripDrawn = false;
                 mainMap.Clear();
                 behaviour_trip.Hideable = true;
@@ -469,15 +534,16 @@ namespace Taxi__
                         case Result.Ok:
                             var place = Autocomplete.GetPlaceFromIntent(data);
 
+                            name_tv.Text = "Please wait...";
                             destinationText.Text = place.Name;
                             destinationAddress = place.Address;
                             destinationLatLng = place.LatLng;
                             dest_rl.Enabled = false;
                             SaveToSharedPreference(place.Name, destinationAddress, destinationLatLng);
 
-                            var myloc = await mapHelper.FindCordinateAddress(myposition);
+                            
                             var json = await mapHelper.GetDirectionJsonAsync(myposition, destinationLatLng);
-
+                            var myloc = await mapHelper.FindCordinateAddress(myposition);
                             if (!string.IsNullOrEmpty(json) || !string.IsNullOrEmpty(myloc))
                             {
                                 IsTripDrawn = true;
@@ -493,7 +559,7 @@ namespace Taxi__
                                     txtMyLoc.Text = myloc;
                                     behaviour_trip.State = BottomSheetBehavior.StateExpanded;
                                     behaviour_trip.Hideable = false;
-                                    mainMap.SetPadding(0, 0, 0, trip_details_bottomsheet.Height);
+                                    mainMap.SetPadding(0, 0, 0, trip_details_bottomsheet.Height + 10);
 
                                 });
                             }

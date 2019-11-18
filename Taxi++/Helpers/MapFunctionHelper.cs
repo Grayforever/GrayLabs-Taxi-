@@ -1,9 +1,7 @@
-﻿using Android.Animation;
-using Android.App;
+﻿using Android.App;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Graphics;
-using Android.Views.Animations;
 using Android.Widget;
 using Com.Google.Maps.Android;
 using Java.Util;
@@ -13,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using static Android.Animation.ValueAnimator;
 
 namespace Taxi__.Helpers
 {
@@ -30,13 +27,11 @@ namespace Taxi__.Helpers
         Marker pickupMarker;
         Marker destinationMarker;
 
-        MainActivity _instance;
+        Activity _instance;
 
         SessionManager sessionManager = SessionManager.GetInstance();
 
-        public IntPtr Handle => throw new NotImplementedException();
-
-        public MapFunctionHelper(MainActivity Instance)
+        public MapFunctionHelper(Activity Instance)
         {
             _instance = Instance;
         }
@@ -137,7 +132,7 @@ namespace Taxi__.Helpers
             PolylineOptions polylineOptions = new PolylineOptions()
                 .AddAll(routeList)
                 .InvokeWidth(10)
-                .InvokeColor(Color.Black)
+                .InvokeColor(Color.Blue)
                 .InvokeStartCap(new SquareCap())
                 .InvokeEndCap(new SquareCap())
                 .InvokeJointType(JointType.Round)
@@ -149,22 +144,22 @@ namespace Taxi__.Helpers
             LatLng firstpoint = line[0];
             LatLng lastpoint = line[line.Count - 1];
 
-            //Pickup marker options
-            MarkerOptions pickupMarkerOptions = new MarkerOptions();
-            pickupMarkerOptions.SetPosition(firstpoint);
-            pickupMarkerOptions.SetTitle("My Location");
-            pickupMarkerOptions.SetIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueRed));
-
-
             duration = directionData.routes[0].legs[0].duration.value;
             distance = directionData.routes[0].legs[0].distance.value;
             durationstring = directionData.routes[0].legs[0].duration.text;
             distanceString = directionData.routes[0].legs[0].distance.text;
 
+            //Pickup marker options
+            MarkerOptions pickupMarkerOptions = new MarkerOptions();
+            pickupMarkerOptions.SetPosition(firstpoint);
+            pickupMarkerOptions.SetTitle("My Location");
+            pickupMarkerOptions.SetSnippet(durationstring);
+            pickupMarkerOptions.SetIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueRed));
+
             //Destination marker options
             MarkerOptions destinationMarkerOptions = new MarkerOptions();
             destinationMarkerOptions.SetPosition(lastpoint);
-            destinationMarkerOptions.SetTitle($"{sessionManager.GetDestination()}, {durationstring}");
+            destinationMarkerOptions.SetTitle(sessionManager.GetDestination());
             destinationMarkerOptions.SetIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueGreen));
 
             pickupMarker = map.AddMarker(pickupMarkerOptions);
@@ -184,7 +179,12 @@ namespace Taxi__.Helpers
             CameraUpdate cameraUpdate = CameraUpdateFactory.NewLatLngBounds(tripBound, 200);
             map.AnimateCamera(cameraUpdate);
 
-            destinationMarker.ShowInfoWindow();
+            List<Marker> markers = new List<Marker>();
+            markers.Add(destinationMarker);
+            markers.Add(pickupMarker);
+
+            markers[0].ShowInfoWindow();
+            markers[1].ShowInfoWindow();
         }
 
         public double EstimateFares()

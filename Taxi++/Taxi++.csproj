@@ -71,15 +71,19 @@
     <Compile Include="Activities\PhoneValidationActivity.cs" />
     <Compile Include="Activities\ProfileActivity.cs" />
     <Compile Include="Activities\SplashScreenActivity.cs" />
+    <Compile Include="Adapters\HistoryAdapter.cs" />
     <Compile Include="Adapters\PackageAdapter.cs" />
     <Compile Include="DataModels\NewTripDetails.cs" />
     <Compile Include="DataModels\PaymentDataModels.cs" />
+    <Compile Include="DataModels\SearchHistoryModel.cs" />
+    <Compile Include="EventListeners\RecentHistoryListener.cs" />
     <Compile Include="Fragments\AddPaymentMethod.cs" />
     <Compile Include="Fragments\NoNetworkFragment.cs" />
     <Compile Include="Fragments\RequestDriver.cs" />
     <Compile Include="Helpers\DirectionParser.cs" />
     <Compile Include="Helpers\GeocodingParser.cs" />
     <Compile Include="Helpers\GeofenceBroadcastReceiver.cs" />
+    <Compile Include="Helpers\InfoWindowHelper.cs" />
     <Compile Include="Helpers\MapFunctionHelper.cs" />
     <Compile Include="Helpers\PhoneVerificationCallback.cs" />
     <Compile Include="Helpers\ResultCallback.cs" />
@@ -178,7 +182,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="EventListeners\" />
     <Folder Include="Resources\raw\" />
   </ItemGroup>
   <ItemGroup>
@@ -260,21 +263,6 @@
     <AndroidResource Include="Resources\menu\nav_menu.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-mdpi\profile_img.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-hdpi\profile_img.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xhdpi\profile_img.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxhdpi\profile_img.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxxhdpi\profile_img.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\bg_bottomsheet_dg.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -332,11 +320,6 @@
     <AndroidResource Include="Resources\drawable\ic_support.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\slide_layout.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\greenball.png" />
   </ItemGroup>
   <ItemGroup>
@@ -344,6 +327,39 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\request_driver.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\info_window_layout.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\finding_driver_nearby.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\boy_new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_nav_menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_nav_menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_nav_menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_nav_menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_nav_menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\history_adapterview.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

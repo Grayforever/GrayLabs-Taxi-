@@ -1,0 +1,163 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/onboard_root"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:clickable="true"
+    android:background="@color/colorAccent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Taxify"
+        android:textSize="34sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:id="@+id/brand_txt"
+        android:layout_alignParentTop="true"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/slogan_txt"
+        android:text="Ride your way"
+        android:textColor="@android:color/white"
+        android:layout_below="@+id/brand_txt"
+        android:layout_marginStart="24dp"
+        android:textSize="16sp"
+    />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:background="@drawable/radial_frame_bg"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="12dp"
+        android:elevation="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get started with your"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:layout_marginTop="48dp"
+        />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="4"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="8dp"
+            android:id="@+id/mLinear_view_2"
+            android:transitionName="layout_transition"
+            android:layout_marginEnd="24dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1.5"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:background="@drawable/border_bg"
+                android:layout_marginEnd="8dp"
+                android:clickable="false"
+                android:id="@+id/cc_layout_2">
+
+                <Refractored.Controls.CircleImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/country_flag_img_2"
+                    android:scaleType="centerCrop"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:transitionName="cc_trans"
+                />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/cc_textview_2"
+                    android:textSize="22sp"
+                    android:layout_weight="2"
+                    android:maxLength="4"
+                    android:hint="+233"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                />
+            </LinearLayout>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:id="@+id/user_phone_edittext2"
+                android:layout_weight="2.5"
+                android:layout_alignParentEnd="true"
+                android:hint="Phone Number"
+                android:inputType="none"
+                android:textSize="22sp"
+                android:paddingLeft="16dp"
+                android:background="@drawable/border_bg"
+                android:textColor="@android:color/black"
+                android:transitionName="edittext_trans"
+            />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Or connect with social"
+            android:layout_centerHorizontal="true"
+            android:textSize="16sp"
+            android:layout_below="@id/mLinear_view_2"
+            android:id="@+id/social_txt"
+            android:gravity="center"
+        />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/social_txt"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fabSize="mini"
+                app:backgroundTint="@android:color/white"
+                app:elevation="4dp"
+                android:id="@+id/fab_google"
+                android:src="@drawable/common_google_signin_btn_icon_light"
+                android:layout_margin="4dp"
+            />
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fabSize="mini"
+                app:backgroundTint="@color/facebookPrimary"
+                android:id="@+id/fab_fb"
+                app:elevation="4dp"
+                android:layout_margin="4dp"
+                android:src="@android:drawable/ic_menu_share"
+            />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+   
+
+</RelativeLayout>

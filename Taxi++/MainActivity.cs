@@ -181,6 +181,7 @@ namespace Taxi__
         void GetHisstory()
         {
             layoutManager = new Android.Support.V7.Widget.LinearLayoutManager(historyRecycler.Context);
+            historyAdapter = new HistoryAdapter(recent_searches);
             historyRecycler.SetLayoutManager(layoutManager);
             historyRecycler.SetAdapter(historyAdapter);
         }

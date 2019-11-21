@@ -47,7 +47,7 @@ namespace Taxi__.Activities
                 }
                 else
                 {
-                    StartActivity(typeof(GetStartedActivity));
+                    StartActivity(typeof(OnboardingActivity));
                     Finish();
                 }
             }

@@ -3,8 +3,8 @@
   <item android:state_enabled="false">
     <shape android:shape="rectangle">
       <corners android:radius="@dimen/bottom_sheet_corner_radius"/>
-      <solid android:color="#ede7f6"/>
-      <stroke android:color="#ede7f6" android:width="2dp"/>
+      <solid android:color="#e0e0e0"/>
+      <stroke android:color="#e0e0e0" android:width="2dp"/>
     </shape>
   </item>
 

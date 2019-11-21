@@ -1,4 +1,4 @@
-
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
@@ -8,71 +8,38 @@
     android:focusable="true"
     android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/frame_layout"
-        android:background="@drawable/radial_frame_bg"
-        android:orientation="vertical"
-        android:elevation="4dp">
+        android:id="@+id/getting_started_toolbar"
+        layout="@layout/primary_toolbar"
+    />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:scaleType="centerCrop"
-            android:id="@+id/brand_img"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_launcher_round"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-        />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/welcome_txt"
-            android:text="Welcome to Taxify"
-            android:layout_gravity="center_horizontal"
-            android:textSize="22sp"
-            android:layout_marginTop="8dp"
-            android:textColor="@android:color/white"
-        />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/slogan_txt"
-            android:text="The ride sharing service for the 21st century"
-            android:layout_gravity="center_horizontal"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"
-            android:textColor="@android:color/white"
-        />
-
-    </LinearLayout>
-
-     <TextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/frame_layout"
-        android:id="@+id/sign_in_text"
-        android:text="Get started with your"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_alignParentStart="true"
+        android:id="@+id/confirm_txt"
+        android:text="You'll get an SMS to\nconfirm your number"
+        android:textAlignment="center"
         android:textSize="16sp"
-        android:layout_marginBottom="16dp"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_above="@id/mLinear_view"
+        android:inputType="textMultiLine"
+        android:layout_centerHorizontal="true"
     />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sign_in_text"
         android:weightSum="4"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_centerInParent="true"
+        android:id="@+id/mLinear_view"
+        android:layout_marginTop="24dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -92,6 +59,7 @@
                 android:scaleType="centerCrop"
                 android:layout_weight="1"
                 android:layout_margin="8dp"
+                android:transitionName="cc_trans"
             />
 
             <TextView
@@ -113,16 +81,17 @@
             android:id="@+id/user_phone_edittext"
             android:layout_weight="2.5"
             android:layout_alignParentEnd="true"
-            android:hint="Phone Number"
+            android:hint="0201234567"
             android:inputType="phone"
             android:textSize="22sp"
             android:paddingLeft="16dp"
             android:background="@drawable/border_bg"
             android:textColor="@android:color/black"
             android:imeOptions="actionDone"
+            android:transitionName="edittext_trans"
         />
-    </LinearLayout>
-
+        </LinearLayout>
+        
     <Button
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -135,7 +104,7 @@
         android:text="Sign in"
         android:textAllCaps="false"
         android:textSize="22sp"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/darker_gray"
         android:enabled="false"
     />
 

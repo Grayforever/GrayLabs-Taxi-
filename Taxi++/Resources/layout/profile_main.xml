@@ -23,6 +23,7 @@
         android:layout_below="@id/profile_main_toolbar"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginTop="@dimen/mtrl_toolbar_default_height"
     />
 
     <LinearLayout

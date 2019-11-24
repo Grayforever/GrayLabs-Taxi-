@@ -37,7 +37,7 @@ namespace Taxi__.Activities
             profileRoot = (RelativeLayout)FindViewById(Resource.Id.profile_main_root);
 
             var phone = (EditText)FindViewById(Resource.Id.profile_phone);
-            phone.Text = sessionManager.GetPhone();
+            phone.Text = sessionManager.GetPhone2();
 
             var email = (EditText)FindViewById(Resource.Id.profile_email);
             email.Text = sessionManager.GetEmail();
@@ -49,6 +49,7 @@ namespace Taxi__.Activities
             lastname.Text = sessionManager.GetLastName();
 
         }
+
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.sign_out_menu, menu);
@@ -76,7 +77,7 @@ namespace Taxi__.Activities
 
         public override bool OnSupportNavigateUp()
         {
-            //Finish();
+            Finish();
             return true;
         }
     }

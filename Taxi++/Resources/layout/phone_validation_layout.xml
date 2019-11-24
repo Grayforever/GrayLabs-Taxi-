@@ -14,12 +14,11 @@
     />
 
     <com.goodiebag.pinview.Pinview
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/prim_toolbar1"
+        android:layout_marginTop="@dimen/mtrl_toolbar_default_height"
         android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         app:forceKeyboard="false"
@@ -30,6 +29,7 @@
         app:pinHeight="40dp"
         app:pinLength="6"
         android:id="@+id/phone_pinView"
+        
     />
 
     <TextView
@@ -39,6 +39,9 @@
         android:layout_below="@id/phone_pinView"
         android:text="Text message sent to"
         android:layout_centerHorizontal="true"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="16dp"
+        android:textSize="16dp"
     />
 
     <TextView
@@ -48,6 +51,8 @@
         android:layout_below="@id/enter_code_tv"
         android:text="Resend in "
         android:layout_centerHorizontal="true"
+        android:textSize="16dp"
+        android:layout_marginTop="8dp"
     />
 
     <Button

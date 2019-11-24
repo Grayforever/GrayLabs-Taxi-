@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <android.support.design.widget.CoordinatorLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -48,7 +48,7 @@
         app:rippleColor="@color/colorAccent"
         app:useCompatPadding="true"
         app:backgroundTint="@android:color/white"
-        android:src="@android:drawable/ic_menu_mylocation"
+        android:src="@drawable/ic_myloc"
         android:layout_margin="@dimen/fab_margin"
         android:layout_gravity="end|bottom"
         app:layout_dodgeInsetEdges="bottom"

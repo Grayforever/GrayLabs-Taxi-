@@ -35,6 +35,16 @@
         android:textSize="16sp"
     />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/slogan_img"
+        android:layout_below="@id/brand_txt"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ridesharing_uptodate_2_2x"
+    />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="240dp"
@@ -142,6 +152,7 @@
                 android:id="@+id/fab_google"
                 android:src="@drawable/common_google_signin_btn_icon_light"
                 android:layout_margin="4dp"
+                app:rippleColor="@color/colorAccent"
             />
 
             <android.support.design.widget.FloatingActionButton
@@ -153,6 +164,7 @@
                 app:elevation="4dp"
                 android:layout_margin="4dp"
                 android:src="@android:drawable/ic_menu_share"
+                app:rippleColor="@android:color/white"
             />
 
         </LinearLayout>

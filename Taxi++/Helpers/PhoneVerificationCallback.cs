@@ -19,8 +19,8 @@ namespace Taxi__.Helpers
 
         public override void OnCodeSent(string verificationId, ForceResendingToken forceResendingToken)
         {
-            //base.OnCodeSent(verificationId, forceResendingToken);
             verificationID = verificationId;
+            base.OnCodeSent(verificationId, forceResendingToken);
         }
 
         public override void OnVerificationCompleted(PhoneAuthCredential credential)
@@ -30,7 +30,7 @@ namespace Taxi__.Helpers
             if (strCode != null)
             {
                 _instance.CodePinView.Value = strCode;
-                _instance.VerificationCode(strCode, verificationID);
+                _instance.VerificationCode(verificationID, strCode);
                 _instance.ShowProgressDialog();
             }
         }

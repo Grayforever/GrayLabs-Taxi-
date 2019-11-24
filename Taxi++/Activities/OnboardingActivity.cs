@@ -23,6 +23,7 @@ namespace Taxi__.Activities
         private LinearLayout ccLinear;
         private EditText mEditText;
         private CircleImageView countryFlagImg;
+        FloatingActionButton mGoogleFab, mFacebookFab;
 
         public const int RequestCode = 100;
         public const int RequestPermission = 200;
@@ -61,7 +62,12 @@ namespace Taxi__.Activities
 
         private void GetWidgets()
         {
+            mGoogleFab = (FloatingActionButton)FindViewById(Resource.Id.fab_google);
+            mGoogleFab.Click += MGoogleFab_Click;
+            mFacebookFab = (FloatingActionButton)FindViewById(Resource.Id.fab_fb);
+
             mRelativeLayout = (RelativeLayout)FindViewById(Resource.Id.onboard_root);
+            mRelativeLayout.RequestFocus();
 
             mLinearLayout = (LinearLayout)FindViewById(Resource.Id.mLinear_view_2);
             ccLinear = (LinearLayout)FindViewById(Resource.Id.cc_layout_2);
@@ -77,6 +83,15 @@ namespace Taxi__.Activities
             picker = builder.Build();
             country = picker.CountryFromSIM;
             countryFlagImg.SetBackgroundResource(country.Flag);
+        }
+
+        private void MGoogleFab_Click(object sender, EventArgs e)
+        {
+            Org.Aviran.CookieBar2.CookieBar.Build(this)
+               .SetTitle("Info")
+               .SetMessage("Feature coming soon")
+               .SetCookiePosition((int)GravityFlags.Bottom)
+               .Show();
         }
 
         private void MEditText_FocusChange(object sender, View.FocusChangeEventArgs e)

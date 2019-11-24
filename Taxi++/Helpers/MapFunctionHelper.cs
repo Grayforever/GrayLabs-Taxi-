@@ -1,8 +1,8 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Graphics;
-using Android.Widget;
 using Com.Google.Maps.Android;
 using Java.Util;
 using Newtonsoft.Json;
@@ -22,6 +22,11 @@ namespace Taxi__.Helpers
         public double duration;
         public string distanceString;
         public string durationstring;
+        ArrayList routeList;
+
+        //shared preference
+        ISharedPreferences preferences = Application.Context.GetSharedPreferences("userinfo", FileCreationMode.Private);
+        ISharedPreferencesEditor editor;
 
         Android.Gms.Maps.Model.Polyline mPolyline;
         Marker pickupMarker;
@@ -48,15 +53,13 @@ namespace Taxi__.Helpers
             return url;
         }
 
+        private readonly HttpClient httpClient = new HttpClient();
         public async Task<string> GetGeoJsonAsync(string url)
         {
-            using (HttpClientHandler handler = new HttpClientHandler())
-            {
-                HttpClient client = new HttpClient(handler);
-                var result = await client.GetStringAsync(new Uri(url));
+            var GetResponse = await httpClient.GetStringAsync(url).ConfigureAwait(false);
+            
 
-                return result;
-            }
+            return GetResponse;
         }
 
         public async Task<string> FindCordinateAddress(LatLng position)
@@ -67,7 +70,7 @@ namespace Taxi__.Helpers
             string placeAddress = "";
 
             //Check for Internet connection
-            json = await GetGeoJsonAsync(url);
+            json = await GetGeoJsonAsync(url).ConfigureAwait(true);
 
             if (!string.IsNullOrEmpty(json))
             {
@@ -85,19 +88,19 @@ namespace Taxi__.Helpers
 
         }
 
-        public async Task<string> GetDirectionJsonAsync(LatLng location, LatLng destination)
+        public async Task<string> GetDirectionJsonAsync(double loclat, double loclng, double destlat, double destlng)
         {
             //Origin of route
-            string str_origin = "origin=" + location.Latitude + "," + location.Longitude;
+            var str_origin = "origin=" + loclat + "," + loclng;
 
             //Destination of route
-            string str_destination = "destination=" + destination.Latitude + "," + destination.Longitude;
+            var str_destination = "destination=" + destlat + "," + destlng;
 
             //mode
-            string mode = "mode=driving";
+            var mode = "mode=driving";
 
             //Buidling the parameters to the webservice
-            string parameters = str_origin + "&" + str_destination + "&" + "&" + mode + "&key=";
+            var parameters = str_origin + "&" + str_destination + "&" + "&" + mode + "&key=";
 
             //Output format
             string output = "json";
@@ -107,10 +110,7 @@ namespace Taxi__.Helpers
             //Building the final url string
             string url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + key;
 
-            string json = "";
-            json = await GetGeoJsonAsync(url);
-
-            return json;
+            return await GetGeoJsonAsync(url).ConfigureAwait(false);
 
         }
 
@@ -122,7 +122,7 @@ namespace Taxi__.Helpers
             var points = directionData.routes[0].overview_polyline.points;
             var line = PolyUtil.Decode(points);
 
-            ArrayList routeList = new ArrayList();
+            routeList = new ArrayList();
             foreach (LatLng item in line)
             {
                 routeList.Add(item);
@@ -131,7 +131,7 @@ namespace Taxi__.Helpers
             //Draw Polylines on Map
             PolylineOptions polylineOptions = new PolylineOptions()
                 .AddAll(routeList)
-                .InvokeWidth(10)
+                .InvokeWidth(8)
                 .InvokeColor(Color.Blue)
                 .InvokeStartCap(new SquareCap())
                 .InvokeEndCap(new SquareCap())

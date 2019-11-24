@@ -40,7 +40,9 @@ namespace Taxi__.Activities
 
         internal static PhoneValidationActivity Instance { get; set; }
 
-        private string VerificationID, strPhoneNumber;
+        private string VerificationID, strPhoneNumber, int_format;
+
+        private SessionManager sessionManager;
 
         //shared preference
         ISharedPreferences preferences = Application.Context.GetSharedPreferences("userinfo", FileCreationMode.Private);
@@ -56,14 +58,14 @@ namespace Taxi__.Activities
             SetContentView(Resource.Layout.phone_validation_layout);
 
             Instance = this;
-
+            sessionManager = SessionManager.Instance;
+            strPhoneNumber = sessionManager.GetPhone2();
+            int_format = sessionManager.GetIntFormat();
             InitControls();
         }
 
         private void InitControls()
         {
-            strPhoneNumber = Intent.Extras.GetString("strPhoneNumber");
-
             //Toolbar props
             VeriToolbar = (Android.Support.V7.Widget.Toolbar)FindViewById(Resource.Id.prim_toolbar1);
             if (VeriToolbar != null)
@@ -83,8 +85,9 @@ namespace Taxi__.Activities
 
             var first = "Text message sent to ";
 
-            SpannableString str = new SpannableString(first + strPhoneNumber);
-            str.SetSpan(new StyleSpan(TypefaceStyle.Bold), first.Length, first.Length + strPhoneNumber.Length, SpanTypes.ExclusiveExclusive);
+            SpannableString str = new SpannableString(first + int_format);
+            str.SetSpan(new StyleSpan(TypefaceStyle.Bold), first.Length, first.Length + int_format.Length, SpanTypes.ExclusiveExclusive);
+            str.SetSpan(new ForegroundColorSpan(Color.Rgb(88, 96, 240)), first.Length, first.Length + int_format.Length, SpanTypes.ExclusiveExclusive);
 
             EnterCodeTV.TextFormatted = str;
 
@@ -103,7 +106,7 @@ namespace Taxi__.Activities
             }
             else
             {
-                VerificationCode(otpCode, VerificationID);
+                VerificationCode(VerificationID, otpCode);
             }
         }
 
@@ -118,7 +121,7 @@ namespace Taxi__.Activities
             NextButton.Enabled = CodePinView.Value.Length == 6;
         }
 
-        public void VerificationCode(string otpCode, string strVerificationId)
+        public void VerificationCode(string strVerificationId, string otpCode)
         {
             try
             {
@@ -231,8 +234,7 @@ namespace Taxi__.Activities
             editor.PutString("phone", phone);
 
             editor.Apply();
-
-        }
+        }  
 
         
     }

@@ -14,10 +14,8 @@ using Plugin.Connectivity;
 using Taxi__.Fragments;
 using static Android.Views.View;
 using Refractored.Controls;
-using Android.Util;
 using Android.Graphics;
 using Google.I18n.PhoneNumbers;
-using Org.Aviran.CookieBar2;
 
 namespace Taxi__.Activities
 {
@@ -42,6 +40,10 @@ namespace Taxi__.Activities
         private CountryPicker picker;
         private Country country1;
         private string country_code;
+
+        //shared preference
+        ISharedPreferences preferences = Application.Context.GetSharedPreferences("phone_numbers", FileCreationMode.Private);
+        ISharedPreferencesEditor editor;
 
         internal static GetStartedActivity Instance { get; set; }
 
@@ -143,6 +145,7 @@ namespace Taxi__.Activities
                 }
                 else
                 {
+                    ShowProgressDialog();
                     if (!ValidatePhoneNumberAndCode())
                     {
                         return;
@@ -158,7 +161,7 @@ namespace Taxi__.Activities
 
         private bool ValidatePhoneNumberAndCode()
         {
-            ShowProgressDialog();
+            
             if (string.IsNullOrEmpty(country_code))
             {
                 return false;
@@ -180,10 +183,15 @@ namespace Taxi__.Activities
             if (isValid)
             {
                 CloseProgressDialog();
+                //international format
                 var int_format = phoneUtil.Format(phoneProto, PhoneNumberUtil.PhoneNumberFormat.International);
 
+                //normal format
+                var phone = CCTV.Text + UserPhoneText.Text;
+
+                SaveToSharedPreference(phone, int_format);
+
                 Intent myintent = new Intent(this, typeof(PhoneValidationActivity));
-                myintent.PutExtra("strPhoneNumber", int_format);
                 StartActivity(myintent);
                 OverridePendingTransition(Resource.Animation.slide_up_anim, Resource.Animation.slide_up_out);
                 return true;
@@ -191,13 +199,21 @@ namespace Taxi__.Activities
             else
             {
                 CloseProgressDialog();
-                CookieBar.Build(this)
+                Org.Aviran.CookieBar2.CookieBar.Build(this)
                     .SetTitle("Error")
                     .SetMessage("Invalid phone number")
                     .SetCookiePosition((int)GravityFlags.Bottom)
                     .Show();
                 return false;
             }
+        }
+
+        private void SaveToSharedPreference(string strPhoneNum, string int_format)
+        {
+            editor = preferences.Edit();
+            editor.PutString("strPhoneNum", strPhoneNum);
+            editor.PutString("int_format", int_format);
+            editor.Apply();
         }
 
         public void OnSelectCountry(Country country)

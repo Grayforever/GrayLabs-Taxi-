@@ -13,7 +13,9 @@ namespace Taxi__.Helpers
         FirebaseApp app;
         FirebaseAuth auth;
         internal static SessionManager Instance { get; set; }
+
         static ISharedPreferences preferences = Application.Context.GetSharedPreferences("userinfo", FileCreationMode.Private);
+        static ISharedPreferences prefs2 = Application.Context.GetSharedPreferences("phone_numbers", FileCreationMode.Private);
 
         public static SessionManager GetInstance()
         {
@@ -164,6 +166,18 @@ namespace Taxi__.Helpers
         {
             string place = preferences.GetString("place_name", "");
             return place;
+        }
+
+        public string GetIntFormat()
+        {
+            string int_format = prefs2.GetString("int_format", "");
+            return int_format;
+        }
+
+        public string GetPhone2()
+        {
+            string phone = prefs2.GetString("strPhoneNum", "");
+            return phone;
         }
 
         public bool isGoogleSignIn()

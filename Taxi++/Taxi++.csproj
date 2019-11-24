@@ -83,11 +83,10 @@
     <Compile Include="Fragments\RequestDriver.cs" />
     <Compile Include="Helpers\DirectionParser.cs" />
     <Compile Include="Helpers\GeocodingParser.cs" />
-    <Compile Include="Helpers\GeofenceBroadcastReceiver.cs" />
     <Compile Include="Helpers\InfoWindowHelper.cs" />
+    <Compile Include="Helpers\LocationCallbackHelper.cs" />
     <Compile Include="Helpers\MapFunctionHelper.cs" />
     <Compile Include="Helpers\PhoneVerificationCallback.cs" />
-    <Compile Include="Helpers\ResultCallback.cs" />
     <Compile Include="Helpers\SessionManager.cs" />
     <Compile Include="Helpers\StripeTokenCallback.cs" />
     <Compile Include="MainActivity.cs" />
@@ -141,6 +140,9 @@
     </PackageReference>
     <PackageReference Include="Refractored.Controls.CircleImageView">
       <Version>1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="sqlite-net">
+      <Version>1.6.292</Version>
     </PackageReference>
     <PackageReference Include="System.Net.Http">
       <Version>4.3.4</Version>
@@ -377,6 +379,12 @@
     <AndroidResource Include="Resources\layout\onboarding_layout.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ridesharing_uptodate_2_2x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_myloc.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

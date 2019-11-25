@@ -28,7 +28,7 @@
   <style name="FullScreenDialogTheme" parent="Theme.AppCompat.Light.DialogWhenLarge">
     <item name="android:statusBarColor">#FF404850</item>
     <item name="windowNoTitle">true</item>
-    <item name="android:windowEnterAnimation">@anim/slide_up_anim</item>
+    <item name="android:windowBackground">@color/colorTransparent</item>
   </style>
 
     

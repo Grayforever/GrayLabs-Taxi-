@@ -15,7 +15,6 @@ namespace Taxi__.Helpers
         internal static SessionManager Instance { get; set; }
 
         static ISharedPreferences preferences = Application.Context.GetSharedPreferences("userinfo", FileCreationMode.Private);
-        static ISharedPreferences prefs2 = Application.Context.GetSharedPreferences("phone_numbers", FileCreationMode.Private);
 
         public static SessionManager GetInstance()
         {
@@ -170,14 +169,14 @@ namespace Taxi__.Helpers
 
         public string GetIntFormat()
         {
-            string int_format = prefs2.GetString("int_format", "");
+            string int_format = preferences.GetString("int_format", "");
             return int_format;
         }
 
-        public string GetPhone2()
+        public string GetPhoneProto()
         {
-            string phone = prefs2.GetString("strPhoneNum", "");
-            return phone;
+            string phoneProto = preferences.GetString("phoneProto", "");
+            return phoneProto;
         }
 
         public bool isGoogleSignIn()

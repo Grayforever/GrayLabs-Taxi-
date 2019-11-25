@@ -37,7 +37,7 @@ namespace Taxi__.Activities
             profileRoot = (RelativeLayout)FindViewById(Resource.Id.profile_main_root);
 
             var phone = (EditText)FindViewById(Resource.Id.profile_phone);
-            phone.Text = sessionManager.GetPhone2();
+            phone.Text = sessionManager.GetPhone();
 
             var email = (EditText)FindViewById(Resource.Id.profile_email);
             email.Text = sessionManager.GetEmail();

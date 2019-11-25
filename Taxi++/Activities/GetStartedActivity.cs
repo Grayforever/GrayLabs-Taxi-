@@ -16,6 +16,7 @@ using static Android.Views.View;
 using Refractored.Controls;
 using Android.Graphics;
 using Google.I18n.PhoneNumbers;
+using Taxi__.Helpers;
 
 namespace Taxi__.Activities
 {
@@ -42,7 +43,7 @@ namespace Taxi__.Activities
         private string country_code;
 
         //shared preference
-        ISharedPreferences preferences = Application.Context.GetSharedPreferences("phone_numbers", FileCreationMode.Private);
+        ISharedPreferences preferences = Application.Context.GetSharedPreferences("userinfo", FileCreationMode.Private);
         ISharedPreferencesEditor editor;
 
         internal static GetStartedActivity Instance { get; set; }
@@ -187,9 +188,9 @@ namespace Taxi__.Activities
                 var int_format = phoneUtil.Format(phoneProto, PhoneNumberUtil.PhoneNumberFormat.International);
 
                 //normal format
-                var phone = CCTV.Text + UserPhoneText.Text;
+                string phone = CCTV.Text + UserPhoneText.Text;
 
-                SaveToSharedPreference(phone, int_format);
+                SaveToSharedPreference(int_format, phoneProto.ToString());
 
                 Intent myintent = new Intent(this, typeof(PhoneValidationActivity));
                 StartActivity(myintent);
@@ -208,11 +209,11 @@ namespace Taxi__.Activities
             }
         }
 
-        private void SaveToSharedPreference(string strPhoneNum, string int_format)
+        private void SaveToSharedPreference(string int_format, string phoneProto)
         {
             editor = preferences.Edit();
-            editor.PutString("strPhoneNum", strPhoneNum);
             editor.PutString("int_format", int_format);
+            editor.PutString("phoneProto", phoneProto);
             editor.Apply();
         }
 
@@ -244,6 +245,7 @@ namespace Taxi__.Activities
 
         public override bool OnSupportNavigateUp()
         {
+            HideKeyboardHelper hideKeyboard = new HideKeyboardHelper(this);
             SupportFinishAfterTransition();
             return true;
             
@@ -251,6 +253,7 @@ namespace Taxi__.Activities
 
         public override void OnBackPressed()
         {
+            HideKeyboardHelper hideKeyboard = new HideKeyboardHelper(this);
             SupportFinishAfterTransition();
             base.OnBackPressed();
             //Finish();

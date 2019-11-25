@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/finding_driver_root"
+    android:background="@color/colorTransparent">
 
-</LinearLayout>
+    <com.airbnb.lottie.LottieAnimationView
+	    android:id="@+id/animation_view"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    app:lottie_fileName="finding_driver.json"
+	    app:lottie_loop="true"
+	    app:lottie_autoPlay="true"
+        app:lottie_renderMode="hardware"
+        android:layout_gravity="center"
+    />
+
+    <include
+        layout="@layout/driverfinder_bottomsheet"
+    />
+</android.support.design.widget.CoordinatorLayout>

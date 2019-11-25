@@ -79,10 +79,12 @@
     <Compile Include="DataModels\SearchHistoryModel.cs" />
     <Compile Include="EventListeners\RecentHistoryListener.cs" />
     <Compile Include="Fragments\AddPaymentMethod.cs" />
+    <Compile Include="Fragments\FindingDriverDialog.cs" />
     <Compile Include="Fragments\NoNetworkFragment.cs" />
     <Compile Include="Fragments\RequestDriver.cs" />
     <Compile Include="Helpers\DirectionParser.cs" />
     <Compile Include="Helpers\GeocodingParser.cs" />
+    <Compile Include="Helpers\HideKeyboardHelper.cs" />
     <Compile Include="Helpers\InfoWindowHelper.cs" />
     <Compile Include="Helpers\LocationCallbackHelper.cs" />
     <Compile Include="Helpers\MapFunctionHelper.cs" />
@@ -95,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <GoogleServicesJson Include="google-services.json" />
+    <AndroidAsset Include="Assets\finding_driver.json" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
@@ -123,6 +126,9 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_launcher_round.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Com.Airbnb.Android.Lottie">
+      <Version>3.0.4</Version>
+    </PackageReference>
     <PackageReference Include="Karamunting.Android.AviranAbady.CookieBar2">
       <Version>1.1.3</Version>
     </PackageReference>
@@ -373,9 +379,6 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\bg_hd_one.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\layout\onboarding_layout.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -385,6 +388,17 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_myloc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\driverfinder_bottomsheet.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\secondary_btn_bg.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\outline_btn_bg.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

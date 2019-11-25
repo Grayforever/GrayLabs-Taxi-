@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using Taxi__.Activities;
 using Taxi__.Adapters;
 using Taxi__.DataModels;
+using Taxi__.Fragments;
 using Taxi__.Helpers;
 using static Android.Content.IntentSender;
 
@@ -46,6 +47,7 @@ namespace Taxi__
         private NestedScrollView mainBottomSheet;
         private TextView txtFare, txtTime, destinationText, txtMyLoc, txtDest;
         public ProgressBar progress;
+        private Button mSelectRideBtn;
 
         //Map
         private GoogleMap mainMap;
@@ -289,7 +291,8 @@ namespace Taxi__
             txtDest = (TextView)FindViewById(Resource.Id.to_tv1);
             txtFare = (TextView)FindViewById(Resource.Id.trip_value_txt);
             txtTime = (TextView)FindViewById(Resource.Id.trip_time_txt);
-            //mSelectRideBtn = (Button)FindViewById(Resource.Id.ride_select_btn);
+            mSelectRideBtn = (Button)FindViewById(Resource.Id.ride_select_btn);
+            mSelectRideBtn.Click += MSelectRideBtn_Click;
 
 
             mainBottomSheet = (NestedScrollView)FindViewById(Resource.Id.main_bottom_root);
@@ -319,6 +322,12 @@ namespace Taxi__
 
             historyRecycler = (RecyclerView)FindViewById(Resource.Id.mRecycler);
 
+        }
+
+        public void ReverseTrip()
+        {
+            behaviour_trip.Hideable = false;
+            behaviour_trip.State = BottomSheetBehavior.StateExpanded;
         }
 
         private void GetHisstory()
@@ -438,6 +447,14 @@ namespace Taxi__
         #endregion
 
         #region events
+        private void MSelectRideBtn_Click(object sender, EventArgs e)
+        {
+            behaviour.Hideable = true;
+            behaviour.State = BottomSheetBehavior.StateHidden;
+            behaviour_trip.Hideable = true;
+            behaviour_trip.State = BottomSheetBehavior.StateHidden;
+            FindingDriverDialog.display(SupportFragmentManager, false);
+        }
 
         private void HeaderView_Click(object sender, EventArgs e)
         {

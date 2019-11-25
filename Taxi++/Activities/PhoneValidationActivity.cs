@@ -40,7 +40,7 @@ namespace Taxi__.Activities
 
         internal static PhoneValidationActivity Instance { get; set; }
 
-        private string VerificationID, strPhoneNumber, int_format;
+        private string VerificationID, userID, int_format, phoneProto;
 
         private SessionManager sessionManager;
 
@@ -59,8 +59,8 @@ namespace Taxi__.Activities
 
             Instance = this;
             sessionManager = SessionManager.Instance;
-            strPhoneNumber = sessionManager.GetPhone2();
             int_format = sessionManager.GetIntFormat();
+            phoneProto = sessionManager.GetPhoneProto();
             InitControls();
         }
 
@@ -92,7 +92,7 @@ namespace Taxi__.Activities
             EnterCodeTV.TextFormatted = str;
 
             SessionManager sessionManager = SessionManager.GetInstance();
-            sessionManager.SendVerificationCode(strPhoneNumber, Instance);
+            sessionManager.SendVerificationCode(int_format, Instance);
         }
 
         private void NextButton_Click(object sender, EventArgs e)
@@ -149,7 +149,7 @@ namespace Taxi__.Activities
             
             if (task.IsSuccessful)
             {
-                //here
+                userID = sessionManager.GetFirebaseAuth().CurrentUser.Uid;
                 CheckIfUserExists();
             }
             else
@@ -162,7 +162,7 @@ namespace Taxi__.Activities
         {
             SessionManager sessionManager = new SessionManager();
             DatabaseReference userRef = sessionManager.GetDatabase().GetReference("Taxify_users");
-            userRef.OrderByChild("phone").EqualTo(strPhoneNumber).AddListenerForSingleValueEvent(this);
+            userRef.OrderByKey().EqualTo(userID).AddListenerForSingleValueEvent(this);
         }
 
         public void ShowProgressDialog()
@@ -192,7 +192,7 @@ namespace Taxi__.Activities
         {
             if (snapshot.Value != null)
             {
-                var child = snapshot.Child(strPhoneNumber);
+                var child = snapshot.Child(userID);
                 try
                 {
                     email = child?.Child("email").Value.ToString();
@@ -236,7 +236,6 @@ namespace Taxi__.Activities
             editor.Apply();
         }  
 
-        
     }
 
 }

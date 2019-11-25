@@ -1,0 +1,29 @@
+﻿<selector xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- disable state. -->
+  <item android:state_enabled="false">
+    <shape android:shape="rectangle">
+      <corners android:radius="@dimen/bottom_sheet_corner_radius"/>
+      <solid android:color="#e0e0e0"/>
+      <stroke android:color="#e0e0e0" android:width="1dp"/>
+    </shape>
+  </item>
+
+  <!--released state. -->
+  <item android:state_pressed="false">
+    <shape android:shape="rectangle">
+      <corners android:radius="@dimen/bottom_sheet_corner_radius"/>
+      <solid android:color="@android:color/white"/>
+      <stroke android:color="@color/colorAccent" android:width="1dp"/>
+    </shape>
+  </item>
+
+  <!--pressed state. -->
+  <item android:state_pressed="true">
+    <shape android:shape="rectangle">
+      <corners android:radius="@dimen/bottom_sheet_corner_radius"/>
+      <solid android:color="@color/colorAccent"/>
+      <stroke android:color="@android:color/white" android:width="1dp"/>
+    </shape>
+  </item>
+
+</selector>

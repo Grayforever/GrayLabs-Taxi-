@@ -32,6 +32,8 @@ namespace Taxi__.Activities
         private readonly SessionManager sessionManager = SessionManager.GetInstance();
         private string userPhone;
 
+        HideKeyboardHelper hideKeyboard;
+
         //shared preference
         ISharedPreferences preferences = Application.Context.GetSharedPreferences("userinfo", FileCreationMode.Private);
         ISharedPreferencesEditor editor;
@@ -126,11 +128,12 @@ namespace Taxi__.Activities
                 userMap.Put("lastname", lastname);
                 userMap.Put("timestamp", DateTime.UtcNow.ToString());
 
-                DatabaseReference userReference = database.GetReference("Taxify_users/" + mAuth.CurrentUser.PhoneNumber);
+                DatabaseReference userReference = database.GetReference("Taxify_users/" + mAuth.CurrentUser.Uid);
                 userReference.SetValue(userMap);
                 userReference.KeepSynced(true);
 
                 SaveToSharedPreference(email, userPhone, firstname, lastname);
+                hideKeyboard = new HideKeyboardHelper(this);
 
                 var intent = new Intent(this, typeof(MainActivity));
                 intent.PutExtra("isPhoneAuthenticated", true);

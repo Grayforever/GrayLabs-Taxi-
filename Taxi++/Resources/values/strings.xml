@@ -1,7 +1,12 @@
 <resources>
-    <string name="app_name">Taxify</string>
-    <string name="action_settings">Settings</string>
-    <string name="open">Open</string>
-    <string name="close">Close</string>
+  <string name="app_name">Cab 360</string>
+  <string name="action_settings">Settings</string>
+  <string name="open">Open</string>
+  <string name="close">Close</string>
+  <string name="app_slogan">Ride your way</string>
+  <string name="get_started_txt">Get started with your</string>
+  <string name="country_code_hint">+233</string>
+  <string name="phone_num_hint">Phone number</string>
+  <string name="social_connect_txt">Or connect with social</string>
   <string name="map_key">AIzaSyDHXqe3Yh9Nl3wsxFItOoz1IwKiBRP7fxk</string>
 </resources>

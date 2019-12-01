@@ -31,5 +31,10 @@
     <item name="android:windowBackground">@color/colorTransparent</item>
   </style>
 
+  <style name="FullScreenDG" parent="Theme.AppCompat.Light.DialogWhenLarge">
+    <item name="android:statusBarColor">#FF404850</item>
+    <item name="windowNoTitle">true</item>
+  </style>
+
     
 </resources>

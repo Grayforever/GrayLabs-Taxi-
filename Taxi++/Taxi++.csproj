@@ -66,21 +66,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\GetStartedActivity.cs" />
-    <Compile Include="Activities\MainProfileActivity.cs" />
     <Compile Include="Activities\OnboardingActivity.cs" />
-    <Compile Include="Activities\PaymentsActiviity.cs" />
     <Compile Include="Activities\PhoneValidationActivity.cs" />
     <Compile Include="Activities\ProfileActivity.cs" />
     <Compile Include="Activities\SplashScreenActivity.cs" />
     <Compile Include="Adapters\HistoryAdapter.cs" />
-    <Compile Include="Adapters\PackageAdapter.cs" />
     <Compile Include="DataModels\NewTripDetails.cs" />
     <Compile Include="DataModels\PaymentDataModels.cs" />
     <Compile Include="DataModels\SearchHistoryModel.cs" />
     <Compile Include="EventListeners\RecentHistoryListener.cs" />
-    <Compile Include="Fragments\AddPaymentMethod.cs" />
     <Compile Include="Fragments\FindingDriverDialog.cs" />
     <Compile Include="Fragments\NoNetworkFragment.cs" />
+    <Compile Include="Fragments\Places_History.cs" />
+    <Compile Include="Fragments\ProfileFragment.cs" />
     <Compile Include="Fragments\RequestDriver.cs" />
     <Compile Include="Helpers\DirectionParser.cs" />
     <Compile Include="Helpers\GeocodingParser.cs" />
@@ -90,7 +88,6 @@
     <Compile Include="Helpers\MapFunctionHelper.cs" />
     <Compile Include="Helpers\PhoneVerificationCallback.cs" />
     <Compile Include="Helpers\SessionManager.cs" />
-    <Compile Include="Helpers\StripeTokenCallback.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -134,9 +131,6 @@
     </PackageReference>
     <PackageReference Include="Karamunting.Android.MukeshSolanki.CountryPickerAndroid">
       <Version>2.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Naxam.Stripe.Droid">
-      <Version>7.0.1</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
@@ -241,9 +235,6 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\splash_screen.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\taxi.png" />
   </ItemGroup>
   <ItemGroup>
@@ -299,24 +290,6 @@
     <AndroidResource Include="Resources\menu\sign_out_menu.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\icons8_money_24px_1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\payments_layout.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\payment_card.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\payment_activity.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_about.png" />
   </ItemGroup>
   <ItemGroup>
@@ -359,21 +332,6 @@
     <AndroidResource Include="Resources\drawable\boy_new.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable-hdpi\ic_nav_menu.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-mdpi\ic_nav_menu.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xhdpi\ic_nav_menu.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxhdpi\ic_nav_menu.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_nav_menu.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\layout\history_adapterview.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -382,9 +340,6 @@
     <AndroidResource Include="Resources\layout\onboarding_layout.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ridesharing_uptodate_2_2x.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_myloc.png" />
@@ -399,6 +354,17 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\outline_btn_bg.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\places_layout.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_cab_360.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_cab_splash.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

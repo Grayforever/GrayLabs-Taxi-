@@ -19,7 +19,7 @@ namespace Taxi__.Fragments
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetStyle(StyleNormal, Resource.Style.FullScreenDialogTheme);
+            SetStyle(StyleNormal, Resource.Style.FullScreenDG);
             // Create your fragment here
         }
 

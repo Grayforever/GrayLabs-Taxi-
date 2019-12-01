@@ -16,7 +16,7 @@ namespace Taxi__.Fragments
             // Create your fragment here
         }
 
-        public static FindingDriverDialog display(Android.Support.V4.App.FragmentManager fragmentManager, bool cancelable)
+        public static FindingDriverDialog Display(Android.Support.V4.App.FragmentManager fragmentManager, bool cancelable)
         {
             FindingDriverDialog findingDriver = new FindingDriverDialog();
             findingDriver.Cancelable = cancelable;

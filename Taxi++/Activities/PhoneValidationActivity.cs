@@ -79,7 +79,11 @@ namespace Taxi__.Activities
             EnterCodeTV = (TextView)FindViewById(Resource.Id.enter_code_tv);
 
             TimerTV = (TextView)FindViewById(Resource.Id.timer_tv);
-           
+            TimerTV.Click += (s2, e2) =>
+            {
+                //
+            };
+
             NextButton = (Button)FindViewById(Resource.Id.prim_btn1);
             NextButton.Click += NextButton_Click;
 
@@ -210,6 +214,7 @@ namespace Taxi__.Activities
                     intent.SetFlags(ActivityFlags.ClearTask | ActivityFlags.ClearTop | ActivityFlags.NewTask);
                     StartActivity(intent);
                     OverridePendingTransition(Resource.Animation.slide_up_anim, Resource.Animation.slide_up_out);
+                    Finish();
                 }
                 catch
                 {
@@ -235,7 +240,6 @@ namespace Taxi__.Activities
 
             editor.Apply();
         }  
-
     }
 
 }

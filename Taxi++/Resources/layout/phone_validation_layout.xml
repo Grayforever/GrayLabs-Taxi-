@@ -41,7 +41,7 @@
         android:layout_centerHorizontal="true"
         android:textColor="@android:color/black"
         android:layout_marginTop="16dp"
-        android:textSize="16dp"
+
     />
 
     <TextView
@@ -49,10 +49,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/timer_tv"
         android:layout_below="@id/enter_code_tv"
-        android:text="Resend in "
+        android:text="Send me the code again"
         android:layout_centerHorizontal="true"
-        android:textSize="16dp"
         android:layout_marginTop="8dp"
+        android:textColor="@color/colorAccent"
     />
 
     <Button

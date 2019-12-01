@@ -6,7 +6,6 @@ using Android.Gms.Common.Apis;
 using Android.Gms.Location;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
-using Android.Graphics;
 using Android.Locations;
 using Android.OS;
 using Android.Runtime;
@@ -266,8 +265,8 @@ namespace Taxi__
             SetSupportActionBar(mToolbar);
             SupportActionBar.Title = "";
             mToggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, Resource.String.open, Resource.String.close);
+            mToggle.SyncState();
             mDrawer.AddDrawerListener(mToggle);
-            mToolbar.SetNavigationIcon(Resource.Drawable.ic_nav_menu);
 
             //NavigationView
             navView = (NavigationView)FindViewById(Resource.Id.navView);
@@ -416,6 +415,7 @@ namespace Taxi__
                 mainMap.Clear();
                 behaviour_trip.Hideable = true;
                 behaviour_trip.State = BottomSheetBehavior.StateHidden;
+                behaviour.State = BottomSheetBehavior.StateExpanded;
 
                 RunOnUiThread(() =>
                 {
@@ -453,16 +453,15 @@ namespace Taxi__
             behaviour.State = BottomSheetBehavior.StateHidden;
             behaviour_trip.Hideable = true;
             behaviour_trip.State = BottomSheetBehavior.StateHidden;
-            FindingDriverDialog.display(SupportFragmentManager, false);
+            FindingDriverDialog.Display(SupportFragmentManager, false);
         }
 
         private void HeaderView_Click(object sender, EventArgs e)
         {
             if (mDrawer.IsDrawerOpen((int)GravityFlags.Start))
             {
+                ProfileFragment.Display(SupportFragmentManager, true);
                 mDrawer.CloseDrawer((int)GravityFlags.Start);
-                StartActivity(typeof(MainProfileActivity));
-                OverridePendingTransition(Resource.Animation.slide_up_anim, Resource.Animation.slide_up_out);
             }
             return;
         }
@@ -483,11 +482,11 @@ namespace Taxi__
                     break;
 
                 case Resource.Id.action_payments:
-                    StartActivity(typeof(PaymentsActiviity));
-                    OverridePendingTransition(Resource.Animation.slide_up_anim, Resource.Animation.slide_up_out);
+                    
                     break;
 
                 case Resource.Id.action_history:
+                    Places_History.Display(SupportFragmentManager, true);
                     break;
 
                 case Resource.Id.action_promos:
@@ -498,8 +497,6 @@ namespace Taxi__
 
                 case Resource.Id.action_about:
                     break;
-
-
             }
             mDrawer.CloseDrawers();
         }

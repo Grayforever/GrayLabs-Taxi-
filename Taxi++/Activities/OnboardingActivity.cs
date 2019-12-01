@@ -68,11 +68,13 @@ namespace Taxi__.Activities
 
             mRelativeLayout = (RelativeLayout)FindViewById(Resource.Id.onboard_root);
             mRelativeLayout.RequestFocus();
+            mRelativeLayout.Click += MRelativeLayout_Click;
 
             mLinearLayout = (LinearLayout)FindViewById(Resource.Id.mLinear_view_2);
             ccLinear = (LinearLayout)FindViewById(Resource.Id.cc_layout_2);
 
             mEditText = (EditText)FindViewById(Resource.Id.user_phone_edittext2);
+            mEditText.SetCursorVisible(false);
             mEditText.Click += MEditText_Click;
             mEditText.FocusChange += MEditText_FocusChange;
             mLinearLayout.Click += MLinearLayout_Click;
@@ -83,6 +85,11 @@ namespace Taxi__.Activities
             picker = builder.Build();
             country = picker.CountryFromSIM;
             countryFlagImg.SetBackgroundResource(country.Flag);
+        }
+
+        private void MRelativeLayout_Click(object sender, EventArgs e)
+        {
+            GetSharedIntent();
         }
 
         private void MGoogleFab_Click(object sender, EventArgs e)
@@ -116,7 +123,7 @@ namespace Taxi__.Activities
         private void GetSharedIntent()
         {
             var sharedIntent = new Intent(this, typeof(GetStartedActivity));
-            Android.Support.V4.Util.Pair p1 = Android.Support.V4.Util.Pair.Create(ccLinear, "cc_trans");
+            Android.Support.V4.Util.Pair p1 = Android.Support.V4.Util.Pair.Create(countryFlagImg, "cc_trans");
             Android.Support.V4.Util.Pair p2 = Android.Support.V4.Util.Pair.Create(mEditText, "edittext_trans");
 
             ActivityOptionsCompat activityOptions = ActivityOptionsCompat.MakeSceneTransitionAnimation(this, p1, p2);

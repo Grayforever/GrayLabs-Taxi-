@@ -17,6 +17,7 @@ using Refractored.Controls;
 using Android.Graphics;
 using Google.I18n.PhoneNumbers;
 using Taxi__.Helpers;
+using Android.Views.InputMethods;
 
 namespace Taxi__.Activities
 {
@@ -248,7 +249,6 @@ namespace Taxi__.Activities
             HideKeyboardHelper hideKeyboard = new HideKeyboardHelper(this);
             SupportFinishAfterTransition();
             return true;
-            
         }
 
         public override void OnBackPressed()
@@ -258,7 +258,6 @@ namespace Taxi__.Activities
             base.OnBackPressed();
             //Finish();
         }
-
 
     }
 }

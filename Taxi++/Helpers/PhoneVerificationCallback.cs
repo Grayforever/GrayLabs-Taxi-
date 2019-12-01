@@ -20,7 +20,7 @@ namespace Taxi__.Helpers
         public override void OnCodeSent(string verificationId, ForceResendingToken forceResendingToken)
         {
             verificationID = verificationId;
-            base.OnCodeSent(verificationId, forceResendingToken);
+            //base.OnCodeSent(verificationId, forceResendingToken);
         }
 
         public override void OnVerificationCompleted(PhoneAuthCredential credential)

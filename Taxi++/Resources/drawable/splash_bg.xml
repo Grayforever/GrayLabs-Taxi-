@@ -6,7 +6,7 @@
   </item>
 
   <item>
-    <bitmap android:src="@drawable/splash_screen"
+    <bitmap android:src="@drawable/ic_cab_splash"
             android:tileMode="disabled"
             android:gravity="fill_vertical|fill_horizontal"
     />

@@ -87,7 +87,7 @@ namespace Taxi__.Helpers
 
             auth = GetFirebaseAuth();
 
-            PhoneAuthProvider.GetInstance(auth).VerifyPhoneNumber(numeroCelular, 60, TimeUnit.Seconds, Instance, phoneAuthCallbacks);
+            PhoneAuthProvider.GetInstance(auth).VerifyPhoneNumber(numeroCelular, 30, TimeUnit.Seconds, Instance, phoneAuthCallbacks);
         }
 
         public void SignOut()

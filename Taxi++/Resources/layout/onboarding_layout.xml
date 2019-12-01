@@ -9,40 +9,15 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:clickable="true"
-    android:background="@color/colorAccent">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Taxify"
-        android:textSize="34sp"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="?android:attr/actionBarSize"
-        android:id="@+id/brand_txt"
-        android:layout_alignParentTop="true"
-    />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/slogan_txt"
-        android:text="Ride your way"
-        android:textColor="@android:color/white"
-        android:layout_below="@+id/brand_txt"
-        android:layout_marginStart="24dp"
-        android:textSize="16sp"
-    />
+    android:background="@color/colorAccent"
+    android:paddingTop="@dimen/abc_action_bar_default_height_material">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/slogan_img"
-        android:layout_below="@id/brand_txt"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/ridesharing_uptodate_2_2x"
+        android:layout_width="192dp"
+        android:layout_height="74dp"
+        android:src="@drawable/ic_cab_360"
+        android:layout_marginStart="24dp"
+        android:id="@+id/ic_appname"
     />
 
     <RelativeLayout
@@ -138,7 +113,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/abc_action_bar_default_height_material"
             android:layout_below="@+id/social_txt"
             android:orientation="horizontal"
             android:gravity="center">
@@ -150,8 +125,7 @@
                 app:backgroundTint="@android:color/white"
                 app:elevation="4dp"
                 android:id="@+id/fab_google"
-                android:src="@drawable/common_google_signin_btn_icon_light"
-                android:layout_margin="4dp"
+                android:layout_marginEnd="4dp"
                 app:rippleColor="@color/colorAccent"
             />
 
@@ -162,11 +136,9 @@
                 app:backgroundTint="@color/facebookPrimary"
                 android:id="@+id/fab_fb"
                 app:elevation="4dp"
-                android:layout_margin="4dp"
-                android:src="@android:drawable/ic_menu_share"
+                android:layout_marginStart="4dp"
                 app:rippleColor="@android:color/white"
             />
-
         </LinearLayout>
     </RelativeLayout>
 

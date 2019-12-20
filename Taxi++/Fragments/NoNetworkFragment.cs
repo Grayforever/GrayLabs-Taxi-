@@ -35,5 +35,14 @@ namespace Taxi__.Fragments
             };
             return view;
         }
+
+        public static NoNetworkFragment Display(Android.Support.V4.App.FragmentManager manager)
+        {
+            NoNetworkFragment noNetworkFragment = new NoNetworkFragment();
+
+            noNetworkFragment.Cancelable = false;
+            noNetworkFragment.Show(manager, "Hello");
+            return noNetworkFragment;
+        }
     }
 }

@@ -1,0 +1,53 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
+        android:layout_margin="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_ride_type"
+                android:text="Title"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="16dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+            />
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/ride_img"
+                android:scaleType="centerCrop"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_ride_price"
+                android:text="Description"
+                android:layout_below="@id/txt_ride_type"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+            />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

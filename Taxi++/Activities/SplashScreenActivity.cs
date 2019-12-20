@@ -17,39 +17,42 @@ using Taxi__.Helpers;
 
 namespace Taxi__.Activities
 {
-    [Activity(Label = "@string/app_name", MainLauncher = true, Theme = "@style/AppTheme.Splash", NoHistory = false, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+    [Activity(Label = "@string/app_name", MainLauncher = true, Theme = "@style/AppTheme", NoHistory = false, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class SplashScreenActivity : AppCompatActivity
     {
         private SessionManager sessionManager;
+        bool isConnected = CrossConnectivity.Current.IsConnected;
+        
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
+            sessionManager = SessionManager.GetInstance();
             // Create your application here
         }
 
         protected override void OnResume()
         {
-            
-            if (!CrossConnectivity.Current.IsConnected)
+            bool hasSession = sessionManager.GetSession();
+            switch (isConnected)
             {
-                Android.Support.V4.App.DialogFragment dialogFragment = new NoNetworkFragment();
-                dialogFragment.Show(SupportFragmentManager, "no network");
-            }
-            else
-            {
-                sessionManager = SessionManager.GetInstance();
-                string firstname = sessionManager.GetFirstname();
-                if (!string.IsNullOrEmpty(firstname))
-                {
-                    StartActivity(typeof(MainActivity));
-                    Finish();
-                }
-                else
-                {
-                    StartActivity(typeof(OnboardingActivity));
-                    Finish();
-                }
+                case true:
+                    switch (hasSession)
+                    {
+                        case true when !string.IsNullOrEmpty(sessionManager.GetFirstname()):
+                            StartActivity(typeof(MainActivity));
+                            Finish();
+                            break;
+                        default:
+                            StartActivity(typeof(OnboardingActivity));
+                            Finish();
+                            break;
+                    }
+
+                    break;
+
+                case false:
+                    NoNetworkFragment.Display(SupportFragmentManager);
+                    break;
             }
             base.OnResume();
         }

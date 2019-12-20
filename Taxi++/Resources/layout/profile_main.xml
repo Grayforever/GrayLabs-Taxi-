@@ -12,6 +12,14 @@
         android:id="@+id/profile_main_toolbar"
         layout="@layout/primary_toolbar"/>
 
+    <com.facebook.login.widget.LoginButton
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/fb_btn"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_below="@id/profile_main_toolbar"
+    />
 
     <EditText
         android:layout_width="match_parent"
@@ -20,10 +28,10 @@
         android:hint="Phone"
         android:inputType="phone"
         android:enabled="false"
-        android:layout_below="@id/profile_main_toolbar"
+        android:layout_below="@+id/fb_btn"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginTop="@dimen/mtrl_toolbar_default_height"
+        android:layout_marginTop="24dp"
     />
 
     <LinearLayout

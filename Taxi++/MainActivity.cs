@@ -6,10 +6,12 @@ using Android.Gms.Common.Apis;
 using Android.Gms.Location;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
+using Android.Graphics;
 using Android.Locations;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
+using Android.Support.Graphics.Drawable;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
@@ -26,11 +28,12 @@ using Taxi__.DataModels;
 using Taxi__.Fragments;
 using Taxi__.Helpers;
 using static Android.Content.IntentSender;
+using static Android.Support.V4.View.ViewPager;
 
 namespace Taxi__
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
-    public class MainActivity : AppCompatActivity, IOnMapReadyCallback
+    public class MainActivity : AppCompatActivity, IOnMapReadyCallback, IOnPageChangeListener
     {
         #region variable declarations
         //widgets
@@ -44,9 +47,14 @@ namespace Taxi__
         private FloatingActionButton fabMyLoc;
         private RelativeLayout dest_rl, trip_details_bottomsheet;
         private NestedScrollView mainBottomSheet;
-        private TextView txtFare, txtTime, destinationText, txtMyLoc, txtDest;
+        private TextView destinationText, txtMyLoc, txtDest;
         public ProgressBar progress;
         private Button mSelectRideBtn;
+
+        //trip_bottomsheet
+        Android.Support.V4.View.ViewPager pager;
+        Android.Support.V4.View.PagerAdapter adapter;
+        List<RideTypeDataModel> ride_type_list;
 
         //Map
         private GoogleMap mainMap;
@@ -110,6 +118,8 @@ namespace Taxi__
             {
                 PlacesApi.Initialize(this, api_key);
             }
+
+            ride_type_list = new List<RideTypeDataModel>();
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -174,8 +184,16 @@ namespace Taxi__
                                 {
 
                                     mapHelper.DrawTripOnMap(json);
-                                    txtFare.Text = $"GH¢{mapHelper.EstimateFares().ToString()}";
-                                    txtTime.Text = mapHelper.durationstring;
+                                    ride_type_list.Add(new RideTypeDataModel{ Image = Resource.Drawable.taxi, RidePrice = $"GH¢{mapHelper.EstimateFares().ToString()}", RideType = "Falaa"});
+                                    ride_type_list.Add(new RideTypeDataModel { Image = Resource.Drawable.taxi, RidePrice = $"GH¢{mapHelper.EstimateFares().ToString()}", RideType = "Bossu" });
+
+                                    adapter = new RidePagerAdapter(this, ride_type_list);
+                                    pager = (Android.Support.V4.View.ViewPager)FindViewById(Resource.Id.viewPager1);
+                                    pager.Adapter = adapter;
+                                    pager.AddOnPageChangeListener(this);
+                                    
+                                    //txtFare.Text = $"GH¢{mapHelper.EstimateFares().ToString()}";
+                                    //txtTime.Text = mapHelper.durationstring;
                                     txtDest.Text = place.Name;
                                     behaviour_trip.State = BottomSheetBehavior.StateExpanded;
                                     behaviour_trip.Hideable = false;
@@ -288,8 +306,8 @@ namespace Taxi__
 
             txtMyLoc = (TextView)FindViewById(Resource.Id.from_tv1);
             txtDest = (TextView)FindViewById(Resource.Id.to_tv1);
-            txtFare = (TextView)FindViewById(Resource.Id.trip_value_txt);
-            txtTime = (TextView)FindViewById(Resource.Id.trip_time_txt);
+            //txtFare = (TextView)FindViewById(Resource.Id.trip_value_txt);
+            //txtTime = (TextView)FindViewById(Resource.Id.trip_time_txt);
             mSelectRideBtn = (Button)FindViewById(Resource.Id.ride_select_btn);
             mSelectRideBtn.Click += MSelectRideBtn_Click;
 
@@ -624,6 +642,8 @@ namespace Taxi__
                     mainMap.MyLocationEnabled = true;
                     mainMap.UiSettings.MyLocationButtonEnabled = false;
                     mainMap.UiSettings.CompassEnabled = false;
+                    mainMap.UiSettings.RotateGesturesEnabled = false;
+                    mainMap.UiSettings.MapToolbarEnabled = false;
                 }
                 else
                 {
@@ -681,6 +701,21 @@ namespace Taxi__
             mLocationCallback.MyLocation += MLocationCallback_MyLocation;
 
             locationClient.RequestLocationUpdates(mLocationRequest, mLocationCallback, null);
+        }
+
+        public void OnPageScrollStateChanged(int state)
+        {
+            
+        }
+
+        public void OnPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+        {
+            
+        }
+
+        public void OnPageSelected(int position)
+        {
+            
         }
 
         #endregion

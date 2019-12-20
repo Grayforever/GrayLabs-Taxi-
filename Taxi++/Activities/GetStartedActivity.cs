@@ -1,23 +1,22 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Content.PM;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V7.App;
 using Android.Text;
 using Android.Views;
 using Android.Widget;
-using Android.Content.PM;
 using Com.Mukesh.CountryPickerLib;
 using Com.Mukesh.CountryPickerLib.Listeners;
+using Google.I18n.PhoneNumbers;
 using Java.Lang;
 using Plugin.Connectivity;
-using Taxi__.Fragments;
-using static Android.Views.View;
 using Refractored.Controls;
-using Android.Graphics;
-using Google.I18n.PhoneNumbers;
+using Taxi__.Fragments;
 using Taxi__.Helpers;
-using Android.Views.InputMethods;
+using static Android.Views.View;
 
 namespace Taxi__.Activities
 {
@@ -31,10 +30,7 @@ namespace Taxi__.Activities
         private LinearLayout CCLayout;
         private TextView CCTV;
         private Android.Support.V7.Widget.Toolbar mToolbar;
-
-        //dialogs
-        private Android.Support.V7.App.AlertDialog alertDialog;
-        private Android.Support.V7.App.AlertDialog.Builder alertBuilder;
+        private CookieBarHelper helper;
 
         //country picker
         public static string phoneNumber;
@@ -54,8 +50,8 @@ namespace Taxi__.Activities
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.getting_started_layout);
             Instance = this;
-            
-           
+
+            helper = new CookieBarHelper(this);
             InitControls();
         }
        
@@ -147,7 +143,6 @@ namespace Taxi__.Activities
                 }
                 else
                 {
-                    ShowProgressDialog();
                     if (!ValidatePhoneNumberAndCode())
                     {
                         return;
@@ -184,7 +179,6 @@ namespace Taxi__.Activities
 
             if (isValid)
             {
-                CloseProgressDialog();
                 //international format
                 var int_format = phoneUtil.Format(phoneProto, PhoneNumberUtil.PhoneNumberFormat.International);
 
@@ -200,12 +194,7 @@ namespace Taxi__.Activities
             }
             else
             {
-                CloseProgressDialog();
-                Org.Aviran.CookieBar2.CookieBar.Build(this)
-                    .SetTitle("Error")
-                    .SetMessage("Invalid phone number")
-                    .SetCookiePosition((int)GravityFlags.Bottom)
-                    .Show();
+                helper.ShowCookieBar("Error", "Invalid phone number");
                 return false;
             }
         }
@@ -224,24 +213,6 @@ namespace Taxi__.Activities
             countryFlagImg.SetBackgroundResource(country.Flag);
             CCTV.Text = country.DialCode;
             UserPhoneText.RequestFocus();
-        }
-
-        public void ShowProgressDialog()
-        {
-            alertBuilder = new Android.Support.V7.App.AlertDialog.Builder(this);
-            alertBuilder.SetView(Resource.Layout.progress_dialog_layout);
-            alertBuilder.SetCancelable(false);
-            alertDialog = alertBuilder.Show();
-        }
-
-        public void CloseProgressDialog()
-        {
-            if (alertDialog != null)
-            {
-                alertDialog.Dismiss();
-                alertDialog = null;
-                builder = null;
-            }
         }
 
         public override bool OnSupportNavigateUp()

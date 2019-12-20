@@ -9,4 +9,9 @@
   <string name="phone_num_hint">Phone number</string>
   <string name="social_connect_txt">Or connect with social</string>
   <string name="map_key">AIzaSyDHXqe3Yh9Nl3wsxFItOoz1IwKiBRP7fxk</string>
+  <string name="facebook_app_id">489419875114007</string>
+  <string name="fb_login_protocol_scheme">fb489419875114007</string>
+
+  <string name="greeting_txt">Hello world</string>
+  <string name="getting_started_txt">Get started with your</string>
 </resources>

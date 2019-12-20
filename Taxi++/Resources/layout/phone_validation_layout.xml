@@ -40,7 +40,7 @@
         android:text="Text message sent to"
         android:layout_centerHorizontal="true"
         android:textColor="@android:color/black"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
 
     />
 
@@ -61,10 +61,10 @@
         android:id="@+id/prim_btn1"
         android:layout_alignParentBottom="true"
         android:background="@drawable/primary_btn_bg"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="@dimen/marrgin_start_end"
+        android:layout_marginEnd="@dimen/marrgin_start_end"
         android:enabled="false"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/margin_bottom"
         android:text="Next"
         android:textAllCaps="false"
         android:textSize="22sp"

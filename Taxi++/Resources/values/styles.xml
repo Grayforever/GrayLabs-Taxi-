@@ -14,13 +14,6 @@
     <item name="android:textColorSecondary">@android:color/black</item>
   </style>
 
-  <style name="AppTheme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="android:windowBackground">@drawable/splash_bg</item>
-    <item name="android:windowNoTitle">true</item>
-    <item name="android:windowFullscreen">true</item>
-    <item name="android:windowAnimationStyle">@null</item>
-  </style>
-
   <style name="AppTheme.MainScreen" parent="AppTheme">
     <item name="android:statusBarColor">@color/colorAccent</item>
   </style>

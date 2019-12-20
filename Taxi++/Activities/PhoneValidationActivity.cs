@@ -19,6 +19,7 @@ using System;
 using Taxi__.Fragments;
 using Taxi__.Helpers;
 using static Com.Goodiebag.Pinview.Pinview;
+using Java.Util;
 
 namespace Taxi__.Activities
 {
@@ -40,8 +41,10 @@ namespace Taxi__.Activities
 
         internal static PhoneValidationActivity Instance { get; set; }
 
-        private string VerificationID, userID, int_format, phoneProto;
+        CookieBarHelper barHelper;
 
+        private string VerificationID, userID, int_format, phoneProto;
+        FirebaseDatabase database;
         private SessionManager sessionManager;
 
         //shared preference
@@ -59,9 +62,11 @@ namespace Taxi__.Activities
 
             Instance = this;
             sessionManager = SessionManager.Instance;
+            database = sessionManager.GetDatabase();
             int_format = sessionManager.GetIntFormat();
             phoneProto = sessionManager.GetPhoneProto();
             InitControls();
+            barHelper = new CookieBarHelper(this);
         }
 
         private void InitControls()
@@ -91,7 +96,7 @@ namespace Taxi__.Activities
 
             SpannableString str = new SpannableString(first + int_format);
             str.SetSpan(new StyleSpan(TypefaceStyle.Bold), first.Length, first.Length + int_format.Length, SpanTypes.ExclusiveExclusive);
-            str.SetSpan(new ForegroundColorSpan(Color.Rgb(88, 96, 240)), first.Length, first.Length + int_format.Length, SpanTypes.ExclusiveExclusive);
+            //str.SetSpan(new ForegroundColorSpan(Color.Rgb(88, 96, 240)), first.Length, first.Length + int_format.Length, SpanTypes.ExclusiveExclusive);
 
             EnterCodeTV.TextFormatted = str;
 
@@ -150,16 +155,8 @@ namespace Taxi__.Activities
 
         public void OnComplete(Task task)
         {
-            
-            if (task.IsSuccessful)
-            {
-                userID = sessionManager.GetFirebaseAuth().CurrentUser.Uid;
-                CheckIfUserExists();
-            }
-            else
-            {
-                Toast.MakeText(this, task.Exception.Message, ToastLength.Short).Show();
-            }
+            userID = sessionManager.GetCurrentUser().Uid;
+            CheckIfUserExists(); 
         }
 
         private void CheckIfUserExists()
@@ -194,6 +191,7 @@ namespace Taxi__.Activities
 
         public void OnDataChange(DataSnapshot snapshot)
         {
+
             if (snapshot.Value != null)
             {
                 var child = snapshot.Child(userID);
@@ -213,20 +211,20 @@ namespace Taxi__.Activities
                     var intent = new Intent(this, typeof(MainActivity));
                     intent.SetFlags(ActivityFlags.ClearTask | ActivityFlags.ClearTop | ActivityFlags.NewTask);
                     StartActivity(intent);
-                    OverridePendingTransition(Resource.Animation.slide_up_anim, Resource.Animation.slide_up_out);
                     Finish();
                 }
                 catch
                 {
 
                 }
-                
+
             }
             else
             {
                 StartActivity(new Intent(this, typeof(ProfileActivity)));
                 OverridePendingTransition(Resource.Animation.slide_up_anim, Resource.Animation.slide_up_out);
             }
+
         }
 
         void SaveToSharedPreference(string email, string phone, string firstname, string lastname)

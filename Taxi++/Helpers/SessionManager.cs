@@ -100,9 +100,8 @@ namespace Taxi__.Helpers
         {
             bool bResult = false;
             InitializeFirebase();
-            FirebaseUser mUser = GetFirebaseAuth().CurrentUser;
 
-            if (mUser != null)
+            if (GetCurrentUser() != null)
             {
                 bResult = true;
             }
@@ -111,28 +110,9 @@ namespace Taxi__.Helpers
 
         public FirebaseUser GetCurrentUser()
         {
-            var app = FirebaseApp.InitializeApp(Application.Context);
-            FirebaseAuth mAuth;
-            FirebaseUser mUser;
-            if (app == null)
-            {
-                var options = new FirebaseOptions.Builder()
-
-                    .SetApplicationId("taxiproject-185a4")
-                    .SetApiKey("AIzaSyDHXqe3Yh9Nl3wsxFItOoz1IwKiBRP7fxk")
-                    .SetDatabaseUrl("https://taxiproject-185a4.firebaseio.com")
-                    .SetStorageBucket("taxiproject-185a4.appspot.com")
-                    .Build();
-
-                app = FirebaseApp.InitializeApp(Application.Context, options, "APP");
-                mAuth = FirebaseAuth.Instance;
-                mUser = mAuth.CurrentUser;
-            }
-            else
-            {
-                mAuth = FirebaseAuth.Instance;
-                mUser = mAuth.CurrentUser;
-            }
+            InitializeFirebase();
+            var mAuth = GetFirebaseAuth();
+            var mUser = mAuth.CurrentUser;
 
             return mUser;
         }

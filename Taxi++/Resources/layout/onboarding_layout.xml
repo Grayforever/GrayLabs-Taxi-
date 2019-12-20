@@ -12,14 +12,6 @@
     android:background="@color/colorAccent"
     android:paddingTop="@dimen/abc_action_bar_default_height_material">
 
-    <ImageView
-        android:layout_width="192dp"
-        android:layout_height="74dp"
-        android:src="@drawable/ic_cab_360"
-        android:layout_marginStart="24dp"
-        android:id="@+id/ic_appname"
-    />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="240dp"
@@ -125,6 +117,7 @@
                 app:backgroundTint="@android:color/white"
                 app:elevation="4dp"
                 android:id="@+id/fab_google"
+                android:src="@drawable/ic_google"
                 android:layout_marginEnd="4dp"
                 app:rippleColor="@color/colorAccent"
             />
@@ -136,6 +129,7 @@
                 app:backgroundTint="@color/facebookPrimary"
                 android:id="@+id/fab_fb"
                 app:elevation="4dp"
+                android:src="@drawable/facebook"
                 android:layout_marginStart="4dp"
                 app:rippleColor="@android:color/white"
             />

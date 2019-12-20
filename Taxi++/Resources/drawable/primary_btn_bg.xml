@@ -2,7 +2,7 @@
   <!-- disable state. -->
   <item android:state_enabled="false">
     <shape android:shape="rectangle">
-      <corners android:radius="@dimen/bottom_sheet_corner_radius"/>
+      <corners android:radius="@dimen/circular_radius"/>
       <solid android:color="#e0e0e0"/>
       <stroke android:color="#e0e0e0" android:width="2dp"/>
     </shape>
@@ -11,7 +11,7 @@
   <!--released state. -->
   <item android:state_pressed="false">
     <shape android:shape="rectangle">
-      <corners android:radius="@dimen/bottom_sheet_corner_radius"/>
+      <corners android:radius="@dimen/circular_radius"/>
       <solid android:color="@color/colorAccent"/>
       <stroke android:color="@color/colorAccent" android:width="2dp"/>
     </shape>
@@ -20,7 +20,7 @@
   <!--pressed state. -->
   <item android:state_pressed="true">
     <shape android:shape="rectangle">
-      <corners android:radius="@dimen/bottom_sheet_corner_radius"/>
+      <corners android:radius="@dimen/circular_radius"/>
       <solid android:color="@color/facebookPrimary"/>
       <stroke android:color="@color/facebookPrimary" android:width="2dp"/>
     </shape>

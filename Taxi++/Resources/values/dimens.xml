@@ -6,4 +6,7 @@
 
   <dimen name="bottom_sheet_corner_radius">16dp</dimen>
   <dimen name="bottom_sheet_top_padding">8dp</dimen>
+  <dimen name="marrgin_start_end">24dp</dimen>
+  <dimen name="margin_bottom">16dp</dimen>
+  <dimen name="circular_radius">100dp</dimen>
 </resources>

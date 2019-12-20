@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="120dp"
     android:orientation="vertical"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:theme="@style/ThemeOverlay.AppCompat.Light"
     android:gravity="bottom"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackgroundBorderless">

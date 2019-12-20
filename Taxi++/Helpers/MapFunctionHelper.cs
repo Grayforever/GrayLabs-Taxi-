@@ -22,24 +22,19 @@ namespace Taxi__.Helpers
         public double duration;
         public string distanceString;
         public string durationstring;
-        ArrayList routeList;
-
-        //shared preference
-        ISharedPreferences preferences = Application.Context.GetSharedPreferences("userinfo", FileCreationMode.Private);
-        ISharedPreferencesEditor editor;
+        ArrayList routeList = new ArrayList();
+        MarkerOptions pickupMarkerOptions = new MarkerOptions();
+        MarkerOptions destinationMarkerOptions = new MarkerOptions();
 
         Android.Gms.Maps.Model.Polyline mPolyline;
         Marker pickupMarker;
         Marker destinationMarker;
+        CameraUpdate cameraUpdate;
 
-        Activity _instance;
+        PolylineOptions polylineOptions;
+
 
         SessionManager sessionManager = SessionManager.GetInstance();
-
-        public MapFunctionHelper(Activity Instance)
-        {
-            _instance = Instance;
-        }
 
         public MapFunctionHelper(string mMapkey, GoogleMap mmap)
         {
@@ -122,14 +117,13 @@ namespace Taxi__.Helpers
             var points = directionData.routes[0].overview_polyline.points;
             var line = PolyUtil.Decode(points);
 
-            routeList = new ArrayList();
             foreach (LatLng item in line)
             {
                 routeList.Add(item);
             }
 
             //Draw Polylines on Map
-            PolylineOptions polylineOptions = new PolylineOptions()
+            polylineOptions = new PolylineOptions()
                 .AddAll(routeList)
                 .InvokeWidth(8)
                 .InvokeColor(Color.Blue)
@@ -150,14 +144,12 @@ namespace Taxi__.Helpers
             distanceString = directionData.routes[0].legs[0].distance.text;
 
             //Pickup marker options
-            MarkerOptions pickupMarkerOptions = new MarkerOptions();
             pickupMarkerOptions.SetPosition(firstpoint);
             pickupMarkerOptions.SetTitle("My Location");
             pickupMarkerOptions.SetSnippet(durationstring);
             pickupMarkerOptions.SetIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueRed));
 
             //Destination marker options
-            MarkerOptions destinationMarkerOptions = new MarkerOptions();
             destinationMarkerOptions.SetPosition(lastpoint);
             destinationMarkerOptions.SetTitle(sessionManager.GetDestination());
             destinationMarkerOptions.SetIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueGreen));
@@ -176,15 +168,10 @@ namespace Taxi__.Helpers
             LatLng northeast = new LatLng(northlat, northlng);
             LatLngBounds tripBound = new LatLngBounds(southwest, northeast);
 
-            CameraUpdate cameraUpdate = CameraUpdateFactory.NewLatLngBounds(tripBound, 200);
+            cameraUpdate = CameraUpdateFactory.NewLatLngBounds(tripBound, 200);
             map.AnimateCamera(cameraUpdate);
 
-            List<Marker> markers = new List<Marker>();
-            markers.Add(destinationMarker);
-            markers.Add(pickupMarker);
-
-            markers[0].ShowInfoWindow();
-            markers[1].ShowInfoWindow();
+            destinationMarker.ShowInfoWindow();
         }
 
         public double EstimateFares()
@@ -198,10 +185,14 @@ namespace Taxi__.Helpers
             double minsfares = (duration / 60) * timefare;
 
             double amount = kmfares + minsfares + basefare;
-            double fares = Math.Floor(amount / 10) * minfare;
+            double fares = Math.Floor(amount / 2) * minfare;
+
+            if(fares == 0)
+            {
+                return minfare;
+            }
 
             return fares;
-
         }
     }
 }

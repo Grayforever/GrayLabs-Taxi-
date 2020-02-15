@@ -9,8 +9,16 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:clickable="true"
-    android:background="@color/colorAccent"
-    android:paddingTop="@dimen/abc_action_bar_default_height_material">
+    android:background="@color/colorAccent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="450dp"
+        android:id="@+id/bird_img"
+        android:src="@drawable/bird"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+    />
 
     <RelativeLayout
         android:layout_width="match_parent"

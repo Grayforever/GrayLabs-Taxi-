@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!--For all properties see: http://developer.android.com/guide/topics/resources/menu-resource.html-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+			xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<!--Update strings and icons-->
+	<item android:id="@+id/action_edit_firstname"
+				android:title="Edit first name"
+	/>
+
+	<item android:id="@+id/action_edit_lastname"
+				android:title="Edit last name"
+	/>
+
+	<item android:id="@+id/action_edit_email"
+				android:title="Edit email"
+	/>
+
+</menu>

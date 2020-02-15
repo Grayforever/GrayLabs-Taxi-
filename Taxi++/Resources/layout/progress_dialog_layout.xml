@@ -22,6 +22,7 @@
         android:layout_toRightOf="@id/progressBar1"
         android:layout_centerVertical="true"
         android:layout_marginStart="16dp"
+        android:textColor="@android:color/black"
     />
 
 </RelativeLayout>

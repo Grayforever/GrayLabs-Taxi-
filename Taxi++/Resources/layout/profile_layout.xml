@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -20,7 +20,8 @@
         android:layout_marginEnd="@dimen/marrgin_start_end"
         android:layout_marginStart="@dimen/marrgin_start_end"
         android:id="@+id/email_layout"
-        android:layout_marginBottom="2dp">
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="8dp">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/email_edittext"

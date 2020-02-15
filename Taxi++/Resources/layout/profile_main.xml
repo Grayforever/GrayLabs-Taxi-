@@ -1,102 +1,250 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/profile_main_root">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:id="@+id/profile_main_root"
+	android:focusable="true"
+	android:focusableInTouchMode="true"
+	android:clickable="true"
+	android:background="@android:color/white">
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/profile_main_toolbar"
-        layout="@layout/primary_toolbar"/>
+	<android.support.v7.widget.Toolbar
+		android:id="@+id/custom_toolbar"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@android:color/white"
+		android:elevation="4dp">
 
-    <com.facebook.login.widget.LoginButton
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/fb_btn"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_below="@id/profile_main_toolbar"
-    />
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="8dp">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/profile_phone"
-        android:hint="Phone"
-        android:inputType="phone"
-        android:enabled="false"
-        android:layout_below="@+id/fb_btn"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="24dp"
-    />
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/profile_header_txt"
+				android:text="Profile"
+				android:layout_centerVertical="true"
+				android:textSize="22sp"
+				android:textColor="@android:color/black"
+			/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/content_root_rl"
-        android:layout_below="@id/profile_phone"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp">
+			<Button
+				android:layout_width="wrap_content"
+				android:layout_height="22sp"
+				android:id="@+id/log_out_btn"
+				android:text="Log out"
+				android:layout_centerVertical="true"
+				android:textColor="@color/colorAccent"
+				android:textAllCaps="false"
+				android:background="@drawable/outline_btn_bg"
+				android:layout_alignParentEnd="true"
+			/>
+		</RelativeLayout>
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/profile_firstname"
-            android:hint="Firstname"
-            android:inputType="textPersonName"
-            android:layout_alignParentStart="true"
-            android:layout_below="@id/profile_phone"
-            android:layout_weight="1"
-        />
+	</android.support.v7.widget.Toolbar>
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/profile_lastname"
-            android:hint="Lastname"
-            android:inputType="textPersonName"
-            android:layout_alignParentEnd="true"
-            android:layout_weight="1"
-        />
+	<android.support.v7.widget.CardView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/profile_intro_card"
+		app:cardBackgroundColor="@color/colorAccent"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:layout_marginTop="16dp"
+		app:cardCornerRadius="16dp"
+		app:cardElevation="4dp"
+		android:layout_below="@id/custom_toolbar">
 
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="128dp"
+			android:padding="8dp">
 
-    </LinearLayout>
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/profile_txt1"
+				android:textColor="@android:color/white"
+				android:textAlignment="center"
+				android:text="Graham Asare"
+				android:textSize="22sp"
+			/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/profile_email"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:layout_below="@id/content_root_rl"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-    />
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/edit_menu"
+				android:layout_alignParentEnd="true"
+				android:text="&#8942;"
+				android:textStyle="bold"
+				android:textAppearance="?android:attr/textAppearanceLargePopupMenu"
+				android:clickable="true"
+				android:padding="4dp"
+				android:textColor="@android:color/white"
+			/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        android:layout_below="@id/profile_email"
-        android:id="@+id/separator"
-    />
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/profile_txt2"
+				android:textColor="@android:color/white"
+				android:textAlignment="center"
+				android:text="0247412467"
+				android:textSize="16sp"
+				android:layout_below="@+id/profile_txt1"
+			/>
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/favs_recycler"
-        android:layout_below="@id/separator"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="16dp"
-        android:scrollbars="horizontal"
-    />
-                    
+			<com.facebook.login.widget.LoginButton
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/fb_btn"
+				android:textSize="16sp"
+				android:textStyle="normal"
+				android:layout_alignParentBottom="true"
+				android:elevation="4dp"
+			/>
+
+			<Refractored.Controls.CircleImageView
+				android:layout_width="90dp"
+				android:layout_height="90dp"
+				android:id="@+id/profile_ivew"
+				android:scaleType="centerCrop"
+				android:layout_alignParentEnd="true"
+				android:layout_alignParentBottom="true"
+				app:civ_border_width="2dp"
+				app:civ_border_color="@android:color/white"
+			/>
+
+		</RelativeLayout>
+		
+	</android.support.v7.widget.CardView>
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="Ride receipts will be sent to"
+		android:layout_below="@+id/profile_intro_card"
+		android:layout_marginTop="8dp"
+		android:layout_marginStart="16dp"
+		android:id="@+id/textView_ride"
+		android:layout_marginEnd="16dp"
+		android:maxLines="2"
+		android:textSize="12dp"
+		android:textAlignment="center"
+		android:gravity="center"
+	/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="120dp"
+		android:layout_below="@id/textView_ride"
+		android:orientation="vertical"
+		android:weightSum="2"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+		android:layout_centerInParent="true">
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			android:id="@+id/add_home_rl"
+			android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp"
+			android:clickable="true"
+			android:foreground="?android:attr/selectableItemBackgroundBorderless">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentTop="true"
+                android:background="@android:color/darker_gray"
+            />
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="No Home address set"
+				android:id="@+id/txt_addHome"
+				android:layout_alignParentTop="true"
+				android:textSize="16dp"
+				android:textColor="@android:color/black"
+				android:layout_alignParentStart="true"
+			/>
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Home"
+				android:id="@+id/txt_addHome_lbl"
+				android:layout_alignParentStart="true"
+				android:layout_alignParentBottom="true"
+				
+			/>
+
+			<ImageView
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:layout_alignParentEnd="true"
+				android:layout_centerVertical="true"
+				android:id="@+id/home_edit_iv"
+                android:src="@drawable/ic_home"
+			/>
+
+		</RelativeLayout>
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			android:id="@+id/add_work_rl"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp"
+			android:clickable="true"
+			android:foreground="?android:attr/selectableItemBackgroundBorderless">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentTop="true"
+                android:background="@android:color/darker_gray"
+            />
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="No Work address set"
+				android:id="@+id/txt_addWork"
+				android:textSize="16dp"
+				android:textColor="@android:color/black"
+				android:layout_alignParentStart="true"
+			/>
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Work"
+				android:id="@+id/txt_addWork_lbl"
+				android:layout_alignParentStart="true"
+				android:layout_alignParentBottom="true"
+				
+			/>
+
+			<ImageView
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:layout_alignParentEnd="true"
+				android:layout_centerVertical="true"
+				android:id="@+id/work_edit_iv"
+                android:src="@drawable/ic_work"
+			/>
+
+		</RelativeLayout>
+
+	</LinearLayout>
+	
+				
 </RelativeLayout>
-

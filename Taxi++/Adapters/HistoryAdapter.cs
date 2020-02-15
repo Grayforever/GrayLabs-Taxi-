@@ -9,12 +9,11 @@ namespace Taxi__.Adapters
 {
     class HistoryAdapter : RecyclerView.Adapter
     {
-        public event EventHandler<HistoryAdapterClickEventArgs> ItemClick;
-        public event EventHandler<HistoryAdapterClickEventArgs> ItemLongClick;
+        public event EventHandler<int> ItemClick;
 
-        List<SearchHistoryModel> search_list;
+        List<NewTripDetails> search_list;
 
-        public HistoryAdapter(List<SearchHistoryModel> data)
+        public HistoryAdapter(List<NewTripDetails> data)
         {
             search_list = data;
             NotifyDataSetChanged();
@@ -25,8 +24,7 @@ namespace Taxi__.Adapters
         {
 
             var itemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.history_adapterview, parent, false);
-
-            var vh = new HistoryAdapterViewHolder(itemView, OnClick, OnLongClick);
+            var vh = new HistoryAdapterViewHolder(itemView, OnClick);
             return vh;
         }
 
@@ -37,34 +35,24 @@ namespace Taxi__.Adapters
 
             // Replace the contents of the view with that element
             var holder = viewHolder as HistoryAdapterViewHolder;
-            holder.PlaceTextView.Text = search_list[position].PlaceName;
+            holder.PlaceTextView.Text = search_list[position].DestinationAddress;
         }
 
         public override int ItemCount => search_list.Count;
 
-        void OnClick(HistoryAdapterClickEventArgs args) => ItemClick?.Invoke(this, args);
-        void OnLongClick(HistoryAdapterClickEventArgs args) => ItemLongClick?.Invoke(this, args);
+        void OnClick(int position) => ItemClick?.Invoke(this, position);
 
     }
 
     public class HistoryAdapterViewHolder : RecyclerView.ViewHolder
     {
         public TextView PlaceTextView { get; set; }
-        //public LinearLayout linearLayout { get; set; }
 
-        public HistoryAdapterViewHolder(View itemView, Action<HistoryAdapterClickEventArgs> clickListener,
-                            Action<HistoryAdapterClickEventArgs> longClickListener) : base(itemView)
+        public HistoryAdapterViewHolder(View itemView, Action<int> clickListener) : base(itemView)
         {
             PlaceTextView = (TextView)itemView.FindViewById (Resource.Id.history_tv);
-            //linearLayout = (LinearLayout)itemView.FindViewById(Resource.Id.linear_click);
-            itemView.Click += (sender, e) => clickListener(new HistoryAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
-            itemView.LongClick += (sender, e) => longClickListener(new HistoryAdapterClickEventArgs { View = itemView, Position = AdapterPosition });
+            
+            itemView.Click += (sender, pos) => clickListener(LayoutPosition);
         }
-    }
-
-    public class HistoryAdapterClickEventArgs : EventArgs
-    {
-        public View View { get; set; }
-        public int Position { get; set; }
     }
 }

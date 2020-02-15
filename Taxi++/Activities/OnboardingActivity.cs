@@ -12,7 +12,6 @@ using Android.Support.V4.Content;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
-using Com.JeevanDeshmukh.FancyBottomSheetDialogLib;
 using Com.Mukesh.CountryPickerLib;
 using Firebase.Auth;
 using Firebase.Database;
@@ -24,11 +23,17 @@ using Taxi__.EventListeners;
 using Taxi__.Helpers;
 using Xamarin.Facebook;
 using Xamarin.Facebook.Login;
+using Taxi__.Constants;
+using Taxi__.DataModels;
+using Firebase;
+using static Xamarin.Facebook.GraphRequest;
+using Org.Json;
+using Java.Net;
 
 namespace Taxi__.Activities
 {
     [Activity(Label = "OnboardingActivity", Theme = "@style/AppTheme.MainScreen", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.KeyboardHidden, ScreenOrientation = ScreenOrientation.Portrait)]
-    public class OnboardingActivity : AppCompatActivity, IFacebookCallback, IValueEventListener, IOnFailureListener, IOnSuccessListener
+    public class OnboardingActivity : AppCompatActivity, IFacebookCallback, IValueEventListener, IOnFailureListener, IOnSuccessListener, IGraphJSONObjectCallback
     {
         private RelativeLayout mRelativeLayout;
         private LinearLayout mLinearLayout;
@@ -47,12 +52,15 @@ namespace Taxi__.Activities
         private Country country;
         private FirebaseAuth auth;
 
+        private LoginResult loginResult;
+
         private ICallbackManager callbackManager;
 
         //shared preference
         ISharedPreferences preferences = Application.Context.GetSharedPreferences("userinfo", FileCreationMode.Private);
         ISharedPreferencesEditor editor;
         private string userID;
+        LoginMethodEnums LoginMethod;
 
         private TaskCompletionStatusListener taskCompletionStatusListener = new TaskCompletionStatusListener();
         private AlertDialogHelper dialogHelper;
@@ -100,7 +108,6 @@ namespace Taxi__.Activities
 
             mRelativeLayout = (RelativeLayout)FindViewById(Resource.Id.onboard_root);
             mRelativeLayout.RequestFocus();
-            mRelativeLayout.Click += MRelativeLayout_Click;
 
             mLinearLayout = (LinearLayout)FindViewById(Resource.Id.mLinear_view_2);
             ccLinear = (LinearLayout)FindViewById(Resource.Id.cc_layout_2);
@@ -122,11 +129,7 @@ namespace Taxi__.Activities
         private void MFacebookFab_Click(object sender, EventArgs e)
         {
             LoginManager.Instance.LogInWithReadPermissions(this, new List<string> { "public_profile", "email" });
-        }
-
-        private void MRelativeLayout_Click(object sender, EventArgs e)
-        {
-            GetSharedIntent();
+            LoginMethod = LoginMethodEnums.FacebookAuth;
         }
 
         private void MGoogleFab_Click(object sender, EventArgs e)
@@ -192,7 +195,7 @@ namespace Taxi__.Activities
             {
                 dialogHelper.ShowDialog();
                 usingFirebase = true;
-                LoginResult loginResult = result as LoginResult;
+                loginResult = result as LoginResult;
 
                 var credentials = FacebookAuthProvider.GetCredential(loginResult.AccessToken.Token);
                 auth.SignInWithCredential(credentials)
@@ -219,13 +222,15 @@ namespace Taxi__.Activities
             userRef.OrderByKey().EqualTo(userID).AddListenerForSingleValueEvent(this);
         }
 
-        private void SaveToSharedPreference(string email, string phone, string firstname, string lastname)
+        private void SaveToSharedPreference(UserData userData)
         {
             editor = preferences.Edit();
-            editor.PutString("email", email);
-            editor.PutString("firstname", firstname);
-            editor.PutString("lastname", lastname);
-            editor.PutString("phone", phone);
+            editor.PutString("email", userData.Email);
+            editor.PutString("firstname", userData.FirstName);
+            editor.PutString("lastname", userData.LastName);
+            editor.PutString("phone", userData.Phone);
+            editor.PutInt("logintype", userData.Logintype);
+            editor.PutBoolean("isLinked", userData.IsLinked);
 
             editor.Apply();
         }
@@ -239,47 +244,51 @@ namespace Taxi__.Activities
         public void OnDataChange(DataSnapshot snapshot)
         {
             dialogHelper.CloseDialog();
+
             if (snapshot.Value != null)
             {
+                var child = snapshot.Child(userID).Child("User_profile");
                 try
                 {
-                    var child = snapshot.Child(userID);
-                    var email = child?.Child("email").Value.ToString();
-                    var phone = child?.Child("phone").Value.ToString();
-                    var firstname = child?.Child("firstname").Value.ToString();
-                    var lastname = child?.Child("lastname").Value.ToString();
+                    UserData userData = new UserData
+                    {
+                        Email = child?.Child("email").Value.ToString(),
+                        Phone = child?.Child("phone").Value.ToString(),
+                        FirstName = child?.Child("firstname").Value.ToString(),
+                        LastName = child?.Child("lastname").Value.ToString(),
+                        Logintype = (int)LoginMethod,
+                        IsLinked = (bool)child?.Child("isLinkedWithAuth").Value
+                        
+                    };
 
-                    SaveToSharedPreference(email, phone, firstname, lastname);
-
-                    var intent = new Intent(this, typeof(MainActivity));
-                    intent.SetFlags(ActivityFlags.ClearTask | ActivityFlags.ClearTop | ActivityFlags.NewTask);
-                    StartActivity(intent);
-                    dialogHelper.CloseDialog();
-                    Finish();
+                    SetFacebookData(loginResult);
+                    SaveToSharedPreference(userData);
+                    
                 }
-                catch
+                catch(FirebaseException ex)
                 {
-
+                    Console.WriteLine(ex.Message);
                 }
             }
             else
             {
-                
-                new FancyBottomSheetDialog.Builder(this)
-                       .SetTitle("Info")
-                       .SetMessage("Your Facebook is not linked to any Cab360 account, please sign up first.")
-                       .IsCancellable(false)
-                       .SetPositiveBtnText("OK")
-                       .SetPositiveBtnBackground(Color.ParseColor("#FF5860F0"))
-                       .SetIcon(Resource.Drawable.taxi, true)
-                       .OnPositiveClicked(() =>
-                       {
-
-                           auth.SignOut();
-                           LoginManager.Instance.LogOut();
-                       })
-                       .Build();
+                Snackbar.Make(mRelativeLayout, "Your Facebook is not linked to any Cab 360 account. Please sign up first.", Snackbar.LengthIndefinite)
+                    .SetAction("OK", delegate
+                    {
+                        auth.SignOut();
+                        LoginManager.Instance.LogOut();
+                    })
+                    .Show();
             }
+        }
+
+        private void SetFacebookData(LoginResult loginResult)
+        {
+            GraphRequest graphRequest = GraphRequest.NewMeRequest(loginResult.AccessToken, this);
+            Bundle parameters = new Bundle();
+            parameters.PutString("fields", "id,email,first_name,last_name,picture");
+            graphRequest.Parameters = parameters;
+            graphRequest.ExecuteAsync();
         }
 
         protected override void OnStart()
@@ -289,6 +298,28 @@ namespace Taxi__.Activities
             
         }
 
-        
+        public void OnCompleted(JSONObject @object, GraphResponse response)
+        {
+            try
+            {
+                string fbId = response.JSONObject.GetString("id");
+                string _email = response.JSONObject.GetString("email");
+                string firstname = response.JSONObject.GetString("first_name");
+                string lastname = response.JSONObject.GetString("last_name");
+
+                editor = preferences.Edit();
+                editor.PutString("profile_id", fbId);
+                editor.Apply();
+
+                var intent = new Intent(this, typeof(MainActivity));
+                intent.SetFlags(ActivityFlags.ClearTask | ActivityFlags.ClearTop | ActivityFlags.NewTask);
+                StartActivity(intent);
+                Finish();
+            }
+            catch (JSONException e)
+            {
+                e.PrintStackTrace();
+            }
+        }
     }
 }

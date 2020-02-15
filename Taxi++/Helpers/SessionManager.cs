@@ -101,18 +101,20 @@ namespace Taxi__.Helpers
             bool bResult = false;
             InitializeFirebase();
 
-            if (GetCurrentUser() != null)
+            var mAuth = GetFirebaseAuth();
+            var user = mAuth.CurrentUser;
+            if (user != null)
             {
                 bResult = true;
             }
             return bResult;
         }
 
-        public FirebaseUser GetCurrentUser()
+        public string GetCurrentUser()
         {
             InitializeFirebase();
             var mAuth = GetFirebaseAuth();
-            var mUser = mAuth.CurrentUser;
+            var mUser = mAuth.CurrentUser.Uid;
 
             return mUser;
         }
@@ -159,10 +161,23 @@ namespace Taxi__.Helpers
             return phoneProto;
         }
 
-        public bool isGoogleSignIn()
+        public int GetLogintype()
         {
-            bool affirmative = preferences.GetBoolean("isGoogleSignIn", false);
-            return affirmative;
+            int logintype = preferences.GetInt("logintype", 0);
+            return logintype;
+        }
+
+        public string GetFbProfilePic()
+        {
+            string fbID = preferences.GetString("profile_id", "");
+            return fbID;
+        }
+        
+        public bool IsProviderLinked()
+        {
+            bool isLinked = preferences.GetBoolean("isLinked", false);
+
+            return isLinked;
         }
     }
 }

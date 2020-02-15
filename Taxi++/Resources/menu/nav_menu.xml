@@ -1,43 +1,37 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!--For all properties see: http://developer.android.com/guide/topics/resources/menu-resource.html-->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+			xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <!--Update strings and icons-->
-  <item android:id="@+id/action_free_rides"
-	      android:title="Free rides"
-	      app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_free_ride"
-  />
+	<!--Update strings and icons-->
+	<item android:id="@+id/action_free_rides"
+				android:title="Free rides"
+				android:icon="@drawable/ic_free_ride"
+	/>
 
-  <item android:id="@+id/action_payments"
-	      android:title="Payments"
-	      app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_payment"
-  />
+	<item android:id="@+id/action_payments"
+				android:title="Payments"
+				android:icon="@drawable/ic_payment"
+	/>
 
-  <item android:id="@+id/action_history"
-	      android:title="History"
-	      app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_history"
-  />
+	<item android:id="@+id/action_history"
+				android:title="History"
+				android:icon="@drawable/ic_history"
+	/>
 
-  <item android:id="@+id/action_promos"
-	      android:title="Promotions"
-	      app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_promo"
-  />
+	<item android:id="@+id/action_promos"
+				android:title="Promotions"
+				android:icon="@drawable/ic_promo"
+	/>
 
-  <item android:id="@+id/action_support"
-	      android:title="Support"
-	      app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_support"
-  />
+	<item android:id="@+id/action_support"
+				android:title="Support"
+				android:icon="@drawable/ic_support"
+	/>
 
-  <item android:id="@+id/action_about"
-	      android:title="About"
-	      app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_about"
-  />
+	<item android:id="@+id/action_about"
+				android:title="About"
+				android:icon="@drawable/ic_about"
+	/>
 
 </menu>

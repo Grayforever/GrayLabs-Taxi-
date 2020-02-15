@@ -1,6 +1,4 @@
-﻿using Android.App;
-using Android.Content;
-using Android.Gms.Maps;
+﻿using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Graphics;
 using Com.Google.Maps.Android;
@@ -8,7 +6,6 @@ using Java.Util;
 using Newtonsoft.Json;
 using parser.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -22,17 +19,16 @@ namespace Taxi__.Helpers
         public double duration;
         public string distanceString;
         public string durationstring;
+        public string startAddress;
         ArrayList routeList = new ArrayList();
         MarkerOptions pickupMarkerOptions = new MarkerOptions();
         MarkerOptions destinationMarkerOptions = new MarkerOptions();
 
         Android.Gms.Maps.Model.Polyline mPolyline;
+
         Marker pickupMarker;
         Marker destinationMarker;
         CameraUpdate cameraUpdate;
-
-        PolylineOptions polylineOptions;
-
 
         SessionManager sessionManager = SessionManager.GetInstance();
 
@@ -49,10 +45,11 @@ namespace Taxi__.Helpers
         }
 
         private readonly HttpClient httpClient = new HttpClient();
+
         public async Task<string> GetGeoJsonAsync(string url)
         {
             var GetResponse = await httpClient.GetStringAsync(url).ConfigureAwait(false);
-            
+
 
             return GetResponse;
         }
@@ -78,7 +75,6 @@ namespace Taxi__.Helpers
                     }
                 }
             }
-
             return placeAddress;
 
         }
@@ -104,13 +100,15 @@ namespace Taxi__.Helpers
 
             //Building the final url string
             string url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + key;
+            string direction = await GetGeoJsonAsync(url);
 
-            return await GetGeoJsonAsync(url).ConfigureAwait(false);
+            return direction;
 
         }
 
         public void DrawTripOnMap(string json)
         {
+            routeList.Clear();
             var directionData = JsonConvert.DeserializeObject<DirectionParser>(json);
 
             //Decode Encoded Route
@@ -123,9 +121,9 @@ namespace Taxi__.Helpers
             }
 
             //Draw Polylines on Map
-            polylineOptions = new PolylineOptions()
+            PolylineOptions polylineOptions = new PolylineOptions()
                 .AddAll(routeList)
-                .InvokeWidth(8)
+                .InvokeWidth(6)
                 .InvokeColor(Color.Blue)
                 .InvokeStartCap(new SquareCap())
                 .InvokeEndCap(new SquareCap())
@@ -142,6 +140,7 @@ namespace Taxi__.Helpers
             distance = directionData.routes[0].legs[0].distance.value;
             durationstring = directionData.routes[0].legs[0].duration.text;
             distanceString = directionData.routes[0].legs[0].distance.text;
+            startAddress = directionData.routes[0].legs[0].start_address;
 
             //Pickup marker options
             pickupMarkerOptions.SetPosition(firstpoint);
@@ -174,6 +173,12 @@ namespace Taxi__.Helpers
             destinationMarker.ShowInfoWindow();
         }
 
+        
+        public string GetStartAddress()
+        {
+            return startAddress;
+        }
+
         public double EstimateFares()
         {
             double basefare = 1.60; //ghana cedis
@@ -185,13 +190,12 @@ namespace Taxi__.Helpers
             double minsfares = (duration / 60) * timefare;
 
             double amount = kmfares + minsfares + basefare;
-            double fares = Math.Floor(amount / 2) * minfare;
+            double fares = Math.Floor(amount / 10) * minfare;
 
-            if(fares == 0)
+            if (fares < minfare)
             {
                 return minfare;
             }
-
             return fares;
         }
     }

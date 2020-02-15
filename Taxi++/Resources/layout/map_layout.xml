@@ -1,57 +1,57 @@
 
 <android.support.design.widget.CoordinatorLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/map_root_view">
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:id="@+id/map_root_view">
 
-    <FrameLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:background="#cecece">
+	<FrameLayout
+		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		android:background="#cecece">
 
-        <fragment
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:id="@+id/mapFragment"
-            
-        />
+		<fragment
+			android:name="com.google.android.gms.maps.SupportMapFragment"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_gravity="center"
+			android:id="@+id/mapFragment"
+			
+		/>
 
-        <android.support.v7.widget.Toolbar
+		<android.support.v7.widget.Toolbar
 			android:id="@+id/mapToolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:minHeight="?android:attr/actionBarSize"
 		/>
 
-    </FrameLayout>
+	</FrameLayout>
 
-    
-    <!-- Adding bottom sheet after main content -->
-    <include 
-        layout="@layout/main_bottomsheet"
-    />
+	
+	<!-- Adding bottom sheet after main content -->
+	<include 
+		layout="@layout/main_bottomsheet"
+	/>
 
-    <include
-        layout="@layout/trip_details_bottomsheet"
-    />
+	<include
+		layout="@layout/trip_details_bottomsheet"
+	/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fab_myloc"
-        app:fabSize="mini"
-        app:rippleColor="@color/colorAccent"
-        app:useCompatPadding="true"
-        app:backgroundTint="@android:color/white"
-        android:src="@drawable/ic_myloc"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_gravity="end|bottom"
-        app:layout_dodgeInsetEdges="bottom"
-    />
+	<android.support.design.widget.FloatingActionButton
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/fab_myloc"
+		app:fabSize="mini"
+		app:rippleColor="@color/colorAccent"
+		app:useCompatPadding="true"
+		app:backgroundTint="@android:color/white"
+		android:src="@drawable/ic_myloc"
+		android:layout_margin="@dimen/fab_margin"
+		android:layout_gravity="end|bottom"
+		app:layout_dodgeInsetEdges="bottom"
+	/>
 
 </android.support.design.widget.CoordinatorLayout>

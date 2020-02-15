@@ -119,24 +119,25 @@ namespace Taxi__.Activities
                 var email = EmailEditText.Text.Trim();
                 var firstname = FirstNameEditText.Text.Trim();
                 var lastname = LastNameEditText.Text.Trim();
-
+                var isLinked = false;
 
                 HashMap userMap = new HashMap();
                 userMap.Put("email", email);
                 userMap.Put("phone", userPhone);
                 userMap.Put("firstname", firstname);
                 userMap.Put("lastname", lastname);
+                userMap.Put("isLinkedWithAuth", isLinked);
                 userMap.Put("timestamp", DateTime.UtcNow.ToString());
 
-                DatabaseReference userReference = database.GetReference("Taxify_users/" + mAuth.CurrentUser.Uid);
+                DatabaseReference userReference = database.GetReference("Taxify_users/" + mAuth.CurrentUser.Uid).Child("User_profile");
                 userReference.SetValue(userMap);
                 userReference.KeepSynced(true);
 
-                SaveToSharedPreference(email, userPhone, firstname, lastname);
+                SaveToSharedPreference(email, userPhone, firstname, lastname, isLinked);
                 hideKeyboard = new HideKeyboardHelper(this);
-
+              
                 var intent = new Intent(this, typeof(MainActivity));
-                intent.PutExtra("isPhoneAuthenticated", true);
+
                 intent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.ClearTask | ActivityFlags.NewTask);
                 StartActivity(intent);
                 OverridePendingTransition(Resource.Animation.slide_up_anim, Resource.Animation.slide_up_out);
@@ -145,7 +146,7 @@ namespace Taxi__.Activities
             };
         }
 
-        void SaveToSharedPreference(string email, string phone, string firstname, string lastname)
+        void SaveToSharedPreference(string email, string phone, string firstname, string lastname, bool isLinked)
         {
 
             editor = preferences.Edit();
@@ -153,6 +154,7 @@ namespace Taxi__.Activities
             editor.PutString("firstname", firstname);
             editor.PutString("lastname", lastname);
             editor.PutString("phone", phone);
+            editor.PutBoolean("isLinked", isLinked);
 
             editor.Apply();
 

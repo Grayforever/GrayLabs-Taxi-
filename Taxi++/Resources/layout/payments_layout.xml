@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:id="@+id/payments_root"
+	android:background="@android:color/white">
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<android.support.v7.widget.Toolbar
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/payments_toolbar"
+			android:elevation="4dp"
+			android:background="@android:color/white">
+
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginEnd="8dp">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/payments_header_txt"
+					android:text="Payments"
+					android:layout_centerVertical="true"
+					android:textSize="22sp"
+					android:textColor="@android:color/black"
+				/>
+
+				<Button
+					android:layout_width="wrap_content"
+					android:layout_height="22sp"
+					android:id="@+id/add_new_payment_btn"
+					android:text="Add new"
+					android:layout_centerVertical="true"
+					android:textColor="@color/colorAccent"
+					android:textAllCaps="false"
+					android:background="@drawable/outline_btn_bg"
+					android:layout_alignParentEnd="true"
+				/>
+			</RelativeLayout>
+
+		</android.support.v7.widget.Toolbar>
+
+		<android.support.v7.widget.CardView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/payment_intro_card"
+			app:cardBackgroundColor="@color/colorAccent"
+			android:layout_marginStart="16dp"
+			android:layout_marginEnd="16dp"
+			android:layout_marginTop="16dp"
+			app:cardCornerRadius="16dp"
+			app:cardElevation="4dp"
+			android:layout_below="@id/payments_toolbar">
+
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="128dp"
+				android:padding="8dp">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/pay_txt1"
+					android:textColor="@android:color/white"
+					android:textAlignment="center"
+					android:text="Payment convenience"
+					android:textSize="22sp"
+				/>
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/pay_txt2"
+					android:textColor="@android:color/white"
+					android:textAlignment="center"
+					android:text="Pay smart and enjoy a/nseamless ride"
+					android:textSize="16sp"
+					android:inputType="textMultiLine"
+					android:maxLines="2"
+					android:fontFamily="casual"
+					android:layout_below="@id/pay_txt1"
+				/>
+
+				<Refractored.Controls.CircleImageView
+					android:layout_width="96dp"
+					android:layout_height="96dp"
+					android:id="@+id/pay_img1"
+					android:layout_alignParentEnd="true"
+					android:layout_centerVertical="true"
+					android:src="@drawable/ic_money"
+				/>
+
+			</RelativeLayout>
+		
+		</android.support.v7.widget.CardView>
+
+		<android.support.v7.widget.RecyclerView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/pay_recycler"
+			android:layout_below="@id/payment_intro_card"
+			android:layout_marginTop="16dp"
+			android:layout_marginStart="16dp"
+			android:layout_marginEnd="16dp"
+			android:scrollbars="vertical"
+		/>
+
+	</RelativeLayout>
+   
+
+	<include
+		layout="@layout/add_payment_bottomsheet"
+	/>
+</android.support.design.widget.CoordinatorLayout>

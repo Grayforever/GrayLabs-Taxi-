@@ -6,10 +6,9 @@ using static Firebase.Auth.PhoneAuthProvider;
 
 namespace Taxi__.Helpers
 {
-    class PhoneVerificationCallback : OnVerificationStateChangedCallbacks
+    public class PhoneVerificationCallback : OnVerificationStateChangedCallbacks
     {
         readonly PhoneValidationActivity _instance;
-        public string verificationID = "";
         public string smsCode = "";
 
         public PhoneVerificationCallback(PhoneValidationActivity Instance)
@@ -19,8 +18,17 @@ namespace Taxi__.Helpers
 
         public override void OnCodeSent(string verificationId, ForceResendingToken forceResendingToken)
         {
-            verificationID = verificationId;
             //base.OnCodeSent(verificationId, forceResendingToken);
+            
+            if (!string.IsNullOrWhiteSpace(_instance.VerificationID))
+            {
+                _instance.VerificationID = "";
+                _instance.VerificationID = verificationId;
+            }
+            else
+            {
+                _instance.VerificationID = verificationId;
+            }
         }
 
         public override void OnVerificationCompleted(PhoneAuthCredential credential)
@@ -30,7 +38,7 @@ namespace Taxi__.Helpers
             if (strCode != null)
             {
                 _instance.CodePinView.Value = strCode;
-                _instance.VerificationCode(verificationID, strCode);
+                _instance.VerifyCode(strCode);
                 _instance.ShowProgressDialog();
             }
         }
@@ -40,6 +48,5 @@ namespace Taxi__.Helpers
             _instance.CloseProgressDialog();
             Toast.MakeText(_instance.ApplicationContext, exception.Message, ToastLength.Long).Show();
         }
-
     }
 }

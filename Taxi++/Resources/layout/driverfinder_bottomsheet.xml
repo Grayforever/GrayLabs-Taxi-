@@ -7,16 +7,18 @@
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
     app:layout_insetEdge="bottom"
     app:behavior_peekHeight="56dp"
-    android:padding="4dp"
-    android:background="@android:color/white"
-    android:id="@+id/finder_rl">
+    android:background="#E8EAF6"
+    android:id="@+id/finder_rl"
+    android:paddingBottom="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentTop="true"
-        android:id="@+id/mLinear_finder">
+        android:id="@+id/mLinear_finder"
+        android:padding="8dp"
+        android:clickable="true">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="48dp"
@@ -24,6 +26,7 @@
             android:src="@drawable/taxi"
             android:layout_marginBottom="4dp"
         />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,55 +35,168 @@
             android:layout_marginStart="8dp"
             android:textSize="16sp"
             android:textColor="@android:color/black"
+            android:textStyle="bold"
             
         />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="264dp"
+        android:layout_below="@id/mLinear_finder"
+        android:id="@+id/ticket_root"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp">
+
+        <com.vipulasri.ticketview.TicketView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ticketView"
+            app:orientation="horizontal"
+            app:ticketElevation="12dp"
+            app:scallopRadius="7dp"
+            app:scallopPositionPercent="65"
+            app:dividerPadding="0dp"
+            app:showBorder="false"
+            app:showDivider="true"
+            app:dividerType="dash"
+        />
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/frame"
+            android:layout_alignTop="@id/ticketView"
+            android:id="@+id/qr_imgView"
+            android:paddingTop="8dp"
+        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gh 25"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_below="@+id/qr_imgView"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/price_tv"
+        />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:weightSum="3"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:paddingBottom="16dp">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/darker_gray"
+                    android:layout_alignParentEnd="true"
+                />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="From"
+                    android:gravity="center"
+                    android:id="@+id/from_header_tv"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Dansoman"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/mypos_tv"
+                />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/darker_gray"
+                    android:layout_alignParentEnd="true"
+                />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="To"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Korle-bu"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/dest_tv"
+                />
+                
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ETA"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="7 mins"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/eta_tv"
+                />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+    
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        android:layout_below="@id/mLinear_finder"
-        android:layout_marginTop="16dp">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/cancel_finding_btn"
-            android:text="Cancel"
-            android:textColor="@android:color/white"
-            android:textAllCaps="false"
-            android:background="@drawable/secondary_btn_bg"
-            android:layout_marginEnd="2dp"
-        />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/schedule_finding_btn"
-            android:text="Schedule"
-            android:textColor="@android:color/white"
-            android:textAllCaps="false"
-            android:background="@drawable/primary_btn_bg"
-            android:layout_marginEnd="2dp"
-        />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/changePickup_finding_btn"
-            android:text="Change pickup"
-            android:textColor="@android:color/black"
-            android:textAllCaps="false"
-            android:background="@drawable/outline_btn_bg"
-        />
-    </LinearLayout>
-
-    
-    
-
+        android:id="@+id/canc_btn"
+        android:layout_below="@id/ticket_root"
+        android:layout_margin="8dp"
+        android:background="@drawable/outline_btn_bg"
+        android:text="Cancel ride request"
+        android:textColor="@android:color/holo_red_dark"
+    />
 </RelativeLayout>

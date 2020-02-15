@@ -20,11 +20,13 @@ using Taxi__.Fragments;
 using Taxi__.Helpers;
 using static Com.Goodiebag.Pinview.Pinview;
 using Java.Util;
+using Taxi__.DataModels;
+using Taxi__.Constants;
 
 namespace Taxi__.Activities
 {
     [Activity(Label ="Enter code", Theme = "@style/AppTheme",ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.KeyboardHidden | ConfigChanges.SmallestScreenSize, ScreenOrientation = ScreenOrientation.Portrait, WindowSoftInputMode = SoftInput.AdjustResize)]
-    public class PhoneValidationActivity : AppCompatActivity, IPinViewEventListener, IOnCompleteListener, IValueEventListener
+    public class PhoneValidationActivity : AppCompatActivity, IPinViewEventListener, IOnCompleteListener, IValueEventListener, IOnFailureListener
     {
 
         //Views
@@ -43,17 +45,15 @@ namespace Taxi__.Activities
 
         CookieBarHelper barHelper;
 
-        private string VerificationID, userID, int_format, phoneProto;
+        private string int_format, phoneProto;
         FirebaseDatabase database;
+        public string VerificationID, userID;
         private SessionManager sessionManager;
 
         //shared preference
         ISharedPreferences preferences = Application.Context.GetSharedPreferences("userinfo", FileCreationMode.Private);
         ISharedPreferencesEditor editor;
-        private string email;
-        private string userPhone;
-        private string firstname;
-        private string lastname;
+        private LoginMethodEnums Logintype;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -106,7 +106,7 @@ namespace Taxi__.Activities
 
         private void NextButton_Click(object sender, EventArgs e)
         {
-
+            ShowProgressDialog();
             var otpCode = CodePinView.Value;
             if (!CrossConnectivity.Current.IsConnected)
             {
@@ -115,7 +115,7 @@ namespace Taxi__.Activities
             }
             else
             {
-                VerificationCode(VerificationID, otpCode);
+                VerifyCode(otpCode);
             }
         }
 
@@ -130,12 +130,11 @@ namespace Taxi__.Activities
             NextButton.Enabled = CodePinView.Value.Length == 6;
         }
 
-        public void VerificationCode(string strVerificationId, string otpCode)
+        public void VerifyCode(string otpCode)
         {
             try
             {
-                VerificationID = strVerificationId;
-                PhoneAuthCredential credential = PhoneAuthProvider.GetCredential(strVerificationId, otpCode);
+                PhoneAuthCredential credential = PhoneAuthProvider.GetCredential(VerificationID, otpCode);
                 InitializeCredentials(credential);
             }
             catch (IllegalArgumentException iae)
@@ -150,39 +149,31 @@ namespace Taxi__.Activities
             SessionManager sessionManager = SessionManager.GetInstance();
             mAuth = sessionManager.GetFirebaseAuth();
             mAuth.SignInWithCredential(credential)
-                .AddOnCompleteListener(this, this);
+                .AddOnCompleteListener(this)
+                .AddOnFailureListener(this);
         }
 
         public void OnComplete(Task task)
         {
-            userID = sessionManager.GetCurrentUser().Uid;
-            CheckIfUserExists(); 
+            var userId = sessionManager.GetCurrentUser();
+            userID = userId;
+            CheckIfUserExists(userId); 
         }
 
-        private void CheckIfUserExists()
+        public void OnFailure(Java.Lang.Exception e)
+        {
+            
+        }
+
+        private void CheckIfUserExists(string userId)
         {
             SessionManager sessionManager = new SessionManager();
             DatabaseReference userRef = sessionManager.GetDatabase().GetReference("Taxify_users");
-            userRef.OrderByKey().EqualTo(userID).AddListenerForSingleValueEvent(this);
+            userRef.OrderByKey().EqualTo(userId).AddListenerForSingleValueEvent(this);
+            
         }
 
-        public void ShowProgressDialog()
-        {
-            builder = new Android.Support.V7.App.AlertDialog.Builder(this);
-            builder.SetView(Resource.Layout.progress_dialog_layout);
-            builder.SetCancelable(false);
-            alertDialog = builder.Show();
-        }
-
-        public void CloseProgressDialog()
-        {
-            if (alertDialog != null)
-            {
-                alertDialog.Dismiss();
-                alertDialog = null;
-                builder = null;
-            }
-        }
+        
 
         public void OnCancelled(DatabaseError error)
         {
@@ -191,21 +182,24 @@ namespace Taxi__.Activities
 
         public void OnDataChange(DataSnapshot snapshot)
         {
-
+            
             if (snapshot.Value != null)
             {
-                var child = snapshot.Child(userID);
+                var child = snapshot.Child(userID).Child("User_profile");
                 try
                 {
-                    email = child?.Child("email").Value.ToString();
-                    userPhone = child?.Child("phone").Value.ToString();
-                    firstname = child?.Child("firstname").Value.ToString();
-                    lastname = child?.Child("lastname").Value.ToString();
+                    UserData userData = new UserData
+                    {
+                        Email = child?.Child("email").Value.ToString(),
+                        Phone = child?.Child("phone").Value.ToString(),
+                        FirstName = child?.Child("firstname").Value.ToString(),
+                        LastName = child?.Child("lastname").Value.ToString(),
+                        Logintype = (int)LoginMethodEnums.PhoneAuth,
+                        IsLinked = (bool)child?.Child("isLinkedWithAuth").Value
+                    };
 
-                    SaveToSharedPreference(email,
-                                           userPhone,
-                                           firstname,
-                                           lastname);
+                    VerificationID = "";
+                    SaveToSharedPreference(userData);
 
                     CloseProgressDialog();
                     var intent = new Intent(this, typeof(MainActivity));
@@ -227,17 +221,36 @@ namespace Taxi__.Activities
 
         }
 
-        void SaveToSharedPreference(string email, string phone, string firstname, string lastname)
+        private void SaveToSharedPreference(UserData userData)
         {
-
             editor = preferences.Edit();
-            editor.PutString("email", email);
-            editor.PutString("firstname", firstname);
-            editor.PutString("lastname", lastname);
-            editor.PutString("phone", phone);
+            editor.PutString("email", userData.Email);
+            editor.PutString("firstname", userData.FirstName);
+            editor.PutString("lastname", userData.LastName);
+            editor.PutString("phone", userData.Phone);
+            editor.PutInt("logintype", userData.Logintype);
+            editor.PutBoolean("isLinked", userData.IsLinked);
 
             editor.Apply();
-        }  
+        }
+
+        public void ShowProgressDialog()
+        {
+            builder = new Android.Support.V7.App.AlertDialog.Builder(this);
+            builder.SetView(Resource.Layout.progress_dialog_layout);
+            builder.SetCancelable(false);
+            alertDialog = builder.Show();
+        }
+
+        public void CloseProgressDialog()
+        {
+            if (alertDialog != null)
+            {
+                alertDialog.Dismiss();
+                alertDialog = null;
+                builder = null;
+            }
+        }
     }
 
 }

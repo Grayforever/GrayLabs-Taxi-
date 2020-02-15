@@ -1,97 +1,82 @@
 
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/main_bottom_root"
-    android:background="@drawable/bg_bottomsheet_dg"
-    app:behavior_hideable="true"
-    android:elevation="16dp"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
-    app:layout_insetEdge="bottom">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@drawable/bg_bottomsheet_dg"
+	android:id="@+id/main_sheet_root"
+	app:behavior_hideable="true"
+	android:elevation="16dp"
+	app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+	app:layout_insetEdge="bottom">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/greetings_tv"
+		android:text="Hi Graham,"
+		android:textSize="16sp"
+		android:textColor="@android:color/black"
+		android:layout_marginBottom="8dp"
+		android:layout_marginStart="@dimen/margin_bottom"
+		android:layout_marginEnd="@dimen/margin_bottom"
+		android:layout_marginTop="@dimen/margin_bottom"
+	/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/greetings_tv"
-            android:text="Hi Graham,"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            android:textStyle="bold"
-        />
+	<android.support.v7.widget.CardView
+		android:layout_width="match_parent"
+		android:layout_height="50dp"
+		android:layout_below="@id/greetings_tv"
+		app:cardCornerRadius="16dp"
+		android:id="@+id/dest_cv"
+		android:layout_marginStart="@dimen/margin_bottom"
+		android:layout_marginEnd="@dimen/margin_bottom"
+		android:layout_marginBottom="@dimen/margin_bottom">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@id/greetings_tv"
-            app:cardCornerRadius="8dp"
-            android:id="@+id/dest_cv"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp">
+		<RelativeLayout
+			android:layout_height="match_parent"
+			android:layout_width="match_parent"
+			android:clickable="true"
+			android:id="@+id/layoutDestination"
+			android:foreground="?android:attr/selectableItemBackground">
 
-			<RelativeLayout
-				android:layout_height="match_parent"
+			<ImageView
+				android:layout_height="24dp"
+				android:layout_width="24dp"
+				android:src="@drawable/ic_search"
+				android:layout_centerVertical="true"
+				android:layout_marginStart="4dp"
+				android:tint="@color/colorAccent"
+			/>
+
+			<TextView
+				android:id="@+id/destinationText"
+				android:layout_height="wrap_content"
 				android:layout_width="match_parent"
-				android:clickable="true"
-				android:id="@+id/layoutDestination"
-                android:foreground="?android:attr/selectableItemBackground">
-
-				<ImageView
-					android:layout_height="24dp"
-					android:layout_width="24dp"
-					android:src="@drawable/ic_search"
-					android:layout_centerVertical="true"
-                    android:layout_marginStart="4dp"
-                    android:tint="@color/colorAccent"
-				/>
-
-				<TextView
-					android:id="@+id/destinationText"
-					android:layout_height="wrap_content"
-					android:layout_width="match_parent"
-					android:text="Where to?"
-					android:layout_centerVertical="true"
-					android:layout_marginStart="32dp"
-					android:maxLines="2"
-					android:gravity="center_vertical"
-					android:layout_marginEnd="32dp"
-                    android:textSize="16sp"
+				android:text="Where to?"
+				android:layout_centerVertical="true"
+				android:layout_marginStart="32dp"
+				android:maxLines="2"
+				android:gravity="center_vertical"
+				android:layout_marginEnd="32dp"
+				android:textSize="16sp"
 							
-				/>
+			/>
 
-                <ProgressBar
-                    android:layout_width="24dp"
-                    android:layout_height="match_parent"
-                    android:id="@+id/progress1"
-                    android:indeterminate="true"
-                    style="@style/Widget.AppCompat.ProgressBar"
-                    android:visibility="gone"
-                    android:layout_gravity="end"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="4dp"
-                />
+			<ProgressBar
+				android:layout_width="24dp"
+				android:layout_height="match_parent"
+				android:id="@+id/progress1"
+				android:indeterminate="true"
+				style="@style/Widget.AppCompat.ProgressBar"
+				android:visibility="gone"
+				android:layout_gravity="end"
+				android:layout_alignParentRight="true"
+				android:layout_marginEnd="4dp"
+			/>
 
-			</RelativeLayout>
+		</RelativeLayout>
 
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/mRecycler"
-            android:layout_below="@id/dest_cv"
-            android:scrollbars="vertical"
-            android:layout_marginBottom="16dp"
-        />
-    </RelativeLayout>
-</android.support.v4.widget.NestedScrollView>
+	</android.support.v7.widget.CardView>
+</RelativeLayout>
